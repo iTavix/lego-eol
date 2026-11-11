@@ -1,0 +1,509 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>LEGO EOL · Retiring sets</title>
+<meta name="theme-color" content="#eef1fa" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#07080c" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="logo.png">
+<script>try{var m=(JSON.parse(localStorage.getItem('eol.pref.v1'))||{}).mode;if(m==='dark'||m==='light')document.documentElement.setAttribute('data-mode',m);}catch(e){}</script>
+<style>
+:root{
+  --base:#eef1fa; --text:#1d1d1f; --text2:#5f6068; --accent:#0071e3;
+  --blob1:rgba(255,196,120,.42); --blob2:rgba(110,165,255,.44); --blob3:rgba(255,130,170,.30); --blob4:rgba(120,220,200,.28);
+  --glass-hi:rgba(255,255,255,.80); --glass:rgba(255,255,255,.46); --glass-border:rgba(255,255,255,.75);
+  --spec:rgba(255,255,255,.95); --ctl:rgba(120,125,150,.14); --ctl-on:rgba(255,255,255,.92); --sep:rgba(60,60,90,.12);
+  --shadow:0 10px 30px rgba(40,50,95,.11),0 1px 2px rgba(40,50,95,.06);
+  --red:#d70015; --orange:#c93400; --star:#ff9f0a;
+}
+:root{color-scheme:light}
+/* dark look: follows the system unless the visitor picks a mode with the toggle */
+@media (prefers-color-scheme: dark){
+  :root:not([data-mode="light"]){color-scheme:dark;
+    --base:#07080c; --text:#f5f5f7; --text2:#a4a4ad; --accent:#2997ff;
+    --blob1:rgba(255,130,40,.20); --blob2:rgba(50,105,255,.30); --blob3:rgba(210,60,130,.20); --blob4:rgba(30,170,150,.16);
+    --glass-hi:rgba(255,255,255,.13); --glass:rgba(255,255,255,.05); --glass-border:rgba(255,255,255,.16);
+    --spec:rgba(255,255,255,.28); --ctl:rgba(255,255,255,.09); --ctl-on:rgba(255,255,255,.24); --sep:rgba(255,255,255,.12);
+    --shadow:0 12px 34px rgba(0,0,0,.45);
+    --red:#ff453a; --orange:#ff9f0a;
+  }
+}
+:root[data-mode="dark"]{color-scheme:dark;
+  --base:#07080c; --text:#f5f5f7; --text2:#a4a4ad; --accent:#2997ff;
+  --blob1:rgba(255,130,40,.20); --blob2:rgba(50,105,255,.30); --blob3:rgba(210,60,130,.20); --blob4:rgba(30,170,150,.16);
+  --glass-hi:rgba(255,255,255,.13); --glass:rgba(255,255,255,.05); --glass-border:rgba(255,255,255,.16);
+  --spec:rgba(255,255,255,.28); --ctl:rgba(255,255,255,.09); --ctl-on:rgba(255,255,255,.24); --sep:rgba(255,255,255,.12);
+  --shadow:0 12px 34px rgba(0,0,0,.45);
+  --red:#ff453a; --orange:#ff9f0a;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--base);color:var(--text);
+  font:17px/1.47 -apple-system,BlinkMacSystemFont,"SF Pro Text","Helvetica Neue",Helvetica,Arial,sans-serif;
+  -webkit-font-smoothing:antialiased;letter-spacing:-.022em}
+/* soft colour field behind everything: it is what the glass surfaces pick up */
+body::before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;background:
+  radial-gradient(60vmax 50vmax at 4% -6%,var(--blob1),transparent 62%),
+  radial-gradient(58vmax 52vmax at 100% 4%,var(--blob2),transparent 60%),
+  radial-gradient(60vmax 50vmax at 88% 104%,var(--blob3),transparent 62%),
+  radial-gradient(52vmax 46vmax at 0% 96%,var(--blob4),transparent 60%),
+  var(--base)}
+button,input,select{font:inherit;color:inherit;letter-spacing:inherit}
+button{cursor:pointer}
+a{color:var(--accent);text-decoration:none}
+a:hover{text-decoration:underline}
+.wrap{max-width:1200px;margin:0 auto;padding:0 22px}
+
+/* liquid glass: translucent body, bright rim, specular top edge */
+.glass{background:linear-gradient(155deg,var(--glass-hi),var(--glass) 62%);
+  border:1px solid var(--glass-border);
+  box-shadow:inset 0 1px 0 var(--spec),inset 0 -1px 0 rgba(255,255,255,.08),var(--shadow)}
+.blur{-webkit-backdrop-filter:blur(26px) saturate(190%);backdrop-filter:blur(26px) saturate(190%)}
+
+header.hero{padding:40px 0 20px}
+.head{display:flex;align-items:center;gap:26px}
+.logo{height:112px;width:auto;flex:none;filter:drop-shadow(0 6px 14px rgba(20,25,60,.22))}
+.eyebrow{font-size:14px;font-weight:600;color:var(--text2);letter-spacing:.02em;text-transform:uppercase;margin:0 0 6px}
+h1{font-size:clamp(32px,5.4vw,54px);line-height:1.07;font-weight:700;letter-spacing:-.03em;margin:0}
+.sub{font-size:19px;color:var(--text2);margin:10px 0 0;max-width:44em}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin:26px 0 0}
+.stat{border-radius:24px;padding:16px 18px;min-height:104px}
+.stat b{display:block;font-size:28px;line-height:1.15;font-weight:700;letter-spacing:-.025em;font-variant-numeric:tabular-nums}
+.stat span{font-size:13px;color:var(--text2)}
+.stat.hot b{color:var(--red)}
+
+.bar{position:sticky;top:10px;z-index:20;margin-top:6px}
+.panel{border-radius:30px;padding:12px}
+.row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.row + .row{margin-top:8px}
+.search{flex:1 1 150px;position:relative}
+.search input{width:100%;height:40px;border:0;border-radius:999px;background:var(--ctl);padding:0 16px 0 38px;outline:0;
+  box-shadow:inset 0 1px 2px rgba(0,0,0,.06)}
+.search input:focus,select:focus-visible,button:focus-visible{outline:3px solid color-mix(in srgb,var(--accent) 45%,transparent);outline-offset:1px}
+.search svg{position:absolute;left:13px;top:12px;width:16px;height:16px;color:var(--text2)}
+.seg{display:inline-flex;background:var(--ctl);border-radius:999px;padding:3px;overflow-x:auto;max-width:100%;scrollbar-width:none;
+  box-shadow:inset 0 1px 2px rgba(0,0,0,.06)}
+.seg::-webkit-scrollbar{display:none}
+.seg button{border:0;background:none;height:34px;padding:0 14px;border-radius:999px;font-size:14px;font-weight:500;white-space:nowrap}
+.seg button[aria-pressed="true"]{background:var(--ctl-on);font-weight:600;
+  box-shadow:inset 0 1px 0 var(--spec),0 2px 8px rgba(20,25,60,.16)}
+select{height:40px;border:0;border-radius:999px;background-color:var(--ctl);padding:0 34px 0 16px;font-size:14px;font-weight:500;
+  -webkit-appearance:none;appearance:none;max-width:100%;box-shadow:inset 0 1px 2px rgba(0,0,0,.06);
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M1 1l4 4 4-4' fill='none' stroke='%23888' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:right 14px center}
+.pill{border:0;height:40px;border-radius:999px;padding:0 16px;font-size:14px;font-weight:600;background:var(--ctl);white-space:nowrap;
+  box-shadow:inset 0 1px 2px rgba(0,0,0,.06)}
+.pill[aria-pressed="true"]{background:var(--text);color:var(--base)}
+.pill.tint{background:var(--accent);color:#fff;box-shadow:inset 0 1px 0 rgba(255,255,255,.45),0 4px 14px color-mix(in srgb,var(--accent) 40%,transparent)}
+.pill.icon{width:40px;padding:0;font-size:17px;line-height:1}
+.grow{flex:1}
+
+main{padding:8px 0 80px}
+.count{font-size:14px;color:var(--text2);margin:18px 4px 0}
+section.group{margin-top:32px}
+.ghead{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;margin:0 4px 14px}
+.ghead h2{font-size:26px;line-height:1.15;font-weight:700;letter-spacing:-.025em;margin:0}
+.ghead span{font-size:15px;color:var(--text2)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(232px,1fr));gap:14px}
+
+/* every card has the same structure and the same fixed slots, so all cards are the same size */
+.card{border-radius:28px;padding:8px;display:flex;flex-direction:column;position:relative;min-width:0}
+.pic{aspect-ratio:4/3;background:#fff;border-radius:21px;overflow:hidden;display:grid;place-items:center;position:relative;
+  box-shadow:inset 0 0 0 1px rgba(0,0,0,.05)}
+/* the picture is pinned to the tile and scaled down whole: never cropped, whatever its proportions */
+.pic img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;object-position:center;padding:14px;display:block}
+.pic i{position:absolute;font-style:normal;font-size:24px;font-weight:700;color:#d2d2d7;letter-spacing:-.02em}
+.star{position:absolute;top:15px;right:15px;width:36px;height:36px;border:1px solid rgba(255,255,255,.8);border-radius:50%;
+  background:rgba(255,255,255,.62);color:#a9a9b2;display:grid;place-items:center;z-index:2;
+  -webkit-backdrop-filter:blur(10px) saturate(180%);backdrop-filter:blur(10px) saturate(180%);
+  box-shadow:inset 0 1px 0 #fff,0 3px 10px rgba(20,25,60,.14)}
+.star svg{width:17px;height:17px}
+.star[aria-pressed="true"]{color:var(--star)}
+.body{padding:12px 8px 6px;display:flex;flex-direction:column;min-width:0}
+.meta{font-size:12px;line-height:18px;height:18px;color:var(--text2);font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.name{font-size:17px;line-height:21px;height:42px;font-weight:600;letter-spacing:-.02em;margin:2px 0 4px;
+  display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;line-clamp:2;overflow:hidden}
+.note{font-size:12px;line-height:16px;height:16px;color:var(--orange);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.foot{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:8px;height:28px}
+.price{font-size:20px;line-height:28px;font-weight:700;letter-spacing:-.02em;font-variant-numeric:tabular-nums;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
+.price small{font-size:12px;font-weight:400;color:var(--text2);letter-spacing:0}
+.badge{flex:none;font-size:12px;line-height:24px;height:24px;font-weight:600;padding:0 10px;border-radius:999px;background:var(--ctl);color:var(--text2);white-space:nowrap}
+.badge.soon{background:color-mix(in srgb,var(--red) 14%,transparent);color:var(--red)}
+.badge.mid{background:color-mix(in srgb,var(--orange) 15%,transparent);color:var(--orange)}
+.links{font-size:12px;line-height:18px;height:18px;margin-top:8px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.gone .pic img{filter:grayscale(1);opacity:.6}
+.empty{text-align:center;color:var(--text2);padding:70px 0}
+.empty b{display:block;font-size:22px;color:var(--text);margin-bottom:4px}
+footer{color:var(--text2);font-size:12px;padding:0 0 50px}
+
+dialog{border:0;padding:0;background:none;color:var(--text);width:min(640px,calc(100vw - 24px));max-height:calc(100vh - 40px);overflow:visible}
+dialog::backdrop{background:rgba(10,12,30,.28);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
+.sheet{border-radius:34px;padding:26px 26px 22px;max-height:calc(100vh - 40px);overflow:auto}
+.sheet h3{font-size:28px;line-height:1.1;font-weight:700;letter-spacing:-.028em;margin:0 0 4px}
+.sheet .lead{margin:0 0 14px;font-size:15px;color:var(--text2)}
+.gsec{border-top:1px solid var(--sep);padding:14px 0 12px;display:grid;grid-template-columns:34px 1fr;gap:0 12px}
+.gsec .ico{width:34px;height:34px;border-radius:50%;background:var(--ctl);display:grid;place-items:center;font-size:16px;
+  box-shadow:inset 0 1px 0 var(--spec)}
+.gsec h4{margin:0 0 2px;font-size:17px;font-weight:600;letter-spacing:-.02em}
+.gsec ul{margin:0;padding:0 0 0 18px;font-size:14px;line-height:1.45;color:var(--text2)}
+.gsec li{margin:3px 0}
+.sheet .actions{display:flex;justify-content:flex-end;margin-top:6px}
+
+@media (max-width:640px){
+  .wrap{padding:0 14px} header.hero{padding-top:22px}
+  .head{flex-direction:column;align-items:flex-start;gap:12px} .logo{height:72px}
+  .sub{font-size:17px}
+  .bar{position:static}
+  .grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+  .card{border-radius:24px;padding:6px} .pic{border-radius:18px} .pic img{padding:9px} .star{top:11px;right:11px;width:32px;height:32px}
+  .name{font-size:15px;line-height:19px;height:38px} .price{font-size:17px}
+  .foot{flex-direction:column;align-items:flex-start;height:56px;gap:4px}
+  .sheet{padding:22px 18px 18px;border-radius:28px}
+}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap head">
+    <img class="logo" src="logo.png" alt="iTavix" width="620" height="360">
+    <div>
+      <p class="eyebrow">LEGO · End of Life</p>
+      <h1 data-t="h1">Retiring LEGO sets.</h1>
+      <p class="sub" data-t="sub">Every LEGO set leaving production this year and beyond, with expected date, price and countdown.</p>
+    </div>
+  </div>
+  <div class="wrap"><div class="stats" id="stats"></div></div>
+</header>
+
+<div class="bar"><div class="wrap"><div class="panel glass blur">
+  <div class="row">
+    <label class="search">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="7" cy="7" r="5"/><path d="M11 11l3.5 3.5"/></svg>
+      <input id="q" type="search" autocomplete="off" data-t-ph="search" data-t-aria="search" placeholder="Search by name or number">
+    </label>
+    <div class="seg" id="segCur" role="group" data-t-aria="currency"></div>
+    <div class="seg" id="segLang" role="group" aria-label="Language"></div>
+    <button class="pill" id="favBtn" aria-pressed="false" data-t="favs">★ Favorites</button>
+    <button class="pill icon" id="modeBtn" aria-pressed="false" data-t-aria="dark"></button>
+    <button class="pill tint" id="guideBtn" data-t="guideBtn">Guide</button>
+  </div>
+  <div class="row">
+    <div class="seg" id="segYear" role="group" data-t-aria="year"></div>
+    <div class="seg" id="segState" role="group" data-t-aria="status"></div>
+    <span class="grow"></span>
+    <select id="theme" data-t-aria="theme"></select>
+    <select id="sort" data-t-aria="sort">
+      <option value="date" data-t="sDate"></option>
+      <option value="priceDesc" data-t="sPriceDesc"></option>
+      <option value="priceAsc" data-t="sPriceAsc"></option>
+      <option value="pcs" data-t="sPcs"></option>
+      <option value="rel" data-t="sRel"></option>
+      <option value="name" data-t="sName"></option>
+      <option value="num" data-t="sNum"></option>
+    </select>
+  </div>
+</div></div></div>
+
+<main><div class="wrap">
+  <p class="count" id="count"></p>
+  <div id="list"></div>
+</div></main>
+
+<footer><div class="wrap">
+  <span id="foot"></span><br>
+  <span data-t="disclaimer"></span>
+</div></footer>
+
+<dialog id="guide" aria-labelledby="guideTitle">
+  <div class="sheet glass blur">
+    <h3 id="guideTitle" data-t="guideTitle"></h3>
+    <p class="lead" data-t="guideLead"></p>
+    <div id="guideBody"></div>
+    <div class="actions"><button class="pill tint" id="guideClose" data-t="done"></button></div>
+  </div>
+</dialog>
+
+<script>
+function startApp(){
+'use strict';
+var LS_FAV='eol.fav.v1', LS_PREF='eol.pref.v1';
+var MONTHS={jan:1,feb:2,mar:3,apr:4,may:5,jun:6,jul:7,aug:8,sep:9,oct:10,nov:11,dec:12};
+var $=function(id){return document.getElementById(id);};
+function lsGet(k){try{return JSON.parse(localStorage.getItem(k));}catch(e){return null;}}
+function lsSet(k,v){try{localStorage.setItem(k,JSON.stringify(v));return true;}catch(e){return false;}}
+function esc(s){return String(s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});}
+function pad(n){return (n<10?'0':'')+n;}
+
+/* ---------- translations: English is the default, Italian is optional ---------- */
+var I18N={
+ en:{locale:'en-US', lego:'en-us', title:'LEGO EOL · Retiring sets',
+  h1:'Retiring LEGO sets.',
+  sub:'Every LEGO set leaving production this year and beyond, with expected date, price and countdown.',
+  search:'Search by name or number', currency:'Currency', year:'Retirement year', status:'Status', theme:'Theme', sort:'Sort by',
+  favs:'★ Favorites', fav:'Favorite', all:'All', live:'Retiring', gone:'Retired', allThemes:'All themes',
+  sDate:'Retirement date', sPriceDesc:'Price: high to low', sPriceAsc:'Price: low to high', sPcs:'Piece count', sRel:'Newest first', sName:'Name', sNum:'Set number',
+  statLive:'sets retiring · {0} themes', today:'Today', days:'{0} days', statNext:'until the next deadline · {0}',
+  statThatDay:'sets retiring that day', statUpdated:'source last updated',
+  retired:'Retired', lastDay:'Last day', inDays:'in {0} days', inMonths:'in {0} months', inYears:'in {0} years',
+  by:'By end of {0}', inYear:'In {0}', tbc:'exact date to be confirmed', sets:'{0} sets', oneSet:'1 set', listValue:'list value {0}',
+  pieces:'{0} pieces', since:'since {0}', also:'Source also lists: {0}', perBag:'per bag', noPrice:'price n/a in {0}',
+  find:'Find on LEGO.com ↗', none:'No sets found', noneHint:'Try changing filters or search.', noData:'Data temporarily unavailable.',
+  listOf:'List dated {0}', imported:'refreshed {0}',
+  disclaimer:'Retirement dates are unofficial forecasts and may change. Not affiliated with or sponsored by the LEGO Group. Images: Brickset.',
+  dark:'Dark mode', guideBtn:'Guide', done:'Done', guideTitle:'How it works',
+  guideLead:'A quick tour of what you can see and do here.',
+  guide:[
+   ['📦','What this is',['Every LEGO set expected to leave production (“End of Life”), with its expected retirement date.','The tiles at the top show how many sets are still retiring, the days left until the next deadline and how many sets leave on that day.']],
+   ['🗂️','Reading a card',['Top line: set number and theme. Below: name, piece count and release month.','Price is the official list price in the currency you chose.','The pill is the countdown: red under 60 days, orange under 200 days, grey beyond that.','A greyed-out picture means the set has already retired.','An orange note appears when the source lists the same set under two different dates.']],
+   ['🔎','Search and filters',['Search by name, set number or theme: results update as you type.','Filter by retirement year, by status (Retiring, Retired, All) and by theme.','Filters combine, and the line above the list shows how many sets match and their total list value.']],
+   ['↕️','Sorting',['“Retirement date” groups sets by deadline, nearest first.','You can also sort by price, piece count, newest release, name or set number.','Groups titled “In 2027” hold sets with a known year but no exact day yet.']],
+   ['⭐','Favorites',['Tap the star on a card to save the set.','“★ Favorites” shows only your saved sets: a handy shopping list before they disappear.','Favorites are stored on this device only.']],
+   ['🌍','Currency, language and appearance',['Switch prices between €, £ and $.','Use the ☾ / ☀ button to switch between dark and light appearance.','Switch the interface between English (EN) and Italian (IT). Your choices are remembered.']],
+   ['🔄','Data and updates',['The list is kept up to date behind the scenes: there is nothing to do.','The footer shows the date of the list in use.','Dates are unofficial forecasts and can change: check LEGO.com before buying, using the link on each card.']]
+  ]},
+ it:{locale:'it-IT', lego:'it-it', title:'LEGO EOL · Set in uscita di produzione',
+  h1:'Set in uscita di produzione.',
+  sub:'Tutti i set LEGO in ritiro quest’anno e nei prossimi, con data prevista, prezzo e conto alla rovescia.',
+  search:'Cerca per nome o numero', currency:'Valuta', year:'Anno di ritiro', status:'Stato', theme:'Tema', sort:'Ordina per',
+  favs:'★ Preferiti', fav:'Preferito', all:'Tutti', live:'In uscita', gone:'Ritirati', allThemes:'Tutti i temi',
+  sDate:'Data di ritiro', sPriceDesc:'Prezzo: dal più alto', sPriceAsc:'Prezzo: dal più basso', sPcs:'Numero di pezzi', sRel:'Più recenti', sName:'Nome', sNum:'Numero set',
+  statLive:'set in uscita · {0} temi', today:'Oggi', days:'{0} giorni', statNext:'alla prossima scadenza · {0}',
+  statThatDay:'set in ritiro quel giorno', statUpdated:'ultimo aggiornamento della fonte',
+  retired:'Ritirato', lastDay:'Ultimo giorno', inDays:'tra {0} giorni', inMonths:'tra {0} mesi', inYears:'tra {0} anni',
+  by:'Entro il {0}', inYear:'Nel {0}', tbc:'data esatta da definire', sets:'{0} set', oneSet:'1 set', listValue:'valore di listino {0}',
+  pieces:'{0} pezzi', since:'dal {0}', also:'La fonte indica anche: {0}', perBag:'a bustina', noPrice:'prezzo n.d. in {0}',
+  find:'Cerca su LEGO.com ↗', none:'Nessun set trovato', noneHint:'Prova a cambiare filtri o ricerca.', noData:'Dati momentaneamente non disponibili.',
+  listOf:'Lista del {0}', imported:'aggiornata in data {0}',
+  disclaimer:'Le date di ritiro sono previsioni non ufficiali e possono cambiare. Sito non affiliato né sponsorizzato dal LEGO Group. Immagini: Brickset.',
+  dark:'Tema scuro', guideBtn:'Guida', done:'Fine', guideTitle:'Come funziona',
+  guideLead:'Un giro veloce di quello che puoi vedere e fare qui.',
+  guide:[
+   ['📦','Che cos’è',['Tutti i set LEGO destinati a uscire di produzione (“End of Life”), con la data di ritiro prevista.','I riquadri in alto mostrano quanti set sono ancora in uscita, i giorni che mancano alla prossima scadenza e quanti set escono quel giorno.']],
+   ['🗂️','Come leggere una scheda',['Prima riga: numero del set e tema. Sotto: nome, numero di pezzi e mese di uscita.','Il prezzo è quello di listino ufficiale nella valuta scelta.','L’etichetta è il conto alla rovescia: rossa sotto i 60 giorni, arancione sotto i 200, grigia oltre.','Un’immagine in grigio indica un set già ritirato.','Una nota arancione compare quando la fonte riporta lo stesso set con due date diverse.']],
+   ['🔎','Ricerca e filtri',['Cerca per nome, numero del set o tema: i risultati si aggiornano mentre scrivi.','Filtra per anno di ritiro, per stato (In uscita, Ritirati, Tutti) e per tema.','I filtri si combinano, e la riga sopra l’elenco indica quanti set corrispondono e il loro valore di listino totale.']],
+   ['↕️','Ordinamento',['“Data di ritiro” raggruppa i set per scadenza, dalla più vicina.','Puoi ordinare anche per prezzo, numero di pezzi, uscita più recente, nome o numero del set.','I gruppi intitolati “Nel 2027” contengono set di cui si conosce l’anno ma non ancora il giorno esatto.']],
+   ['⭐','Preferiti',['Tocca la stella su una scheda per salvare il set.','“★ Preferiti” mostra solo i set salvati: una lista della spesa prima che spariscano.','I preferiti restano memorizzati solo su questo dispositivo.']],
+   ['🌍','Valuta, lingua e aspetto',['Cambia i prezzi tra €, £ e $.','Usa il pulsante ☾ / ☀ per passare dall’aspetto scuro a quello chiaro.','Cambia l’interfaccia tra inglese (EN) e italiano (IT). Le scelte vengono ricordate.']],
+   ['🔄','Dati e aggiornamenti',['L’elenco viene tenuto aggiornato dietro le quinte: non devi fare nulla.','In fondo alla pagina trovi la data della lista in uso.','Le date sono previsioni non ufficiali e possono cambiare: prima di acquistare verifica su LEGO.com con il link presente su ogni scheda.']]
+  ]}
+};
+var L, fmtLong, fmtMon, fmtDay, fmtNum;
+function t(k){var s=L[k]; for(var i=1;i<arguments.length;i++) s=s.replace('{'+(i-1)+'}',arguments[i]); return s;}
+
+/* ---------- raw data ---------- */
+function parseDate(s){ // "July 31, 2026", "Nov, 1, 2026", "Nov 1 2024" -> "2026-07-31"
+  var m=/([A-Za-z]{3})[a-z]*\.?,?\s+(\d{1,2}),?\s+(\d{4})/.exec(s||'');
+  if(!m) return null;
+  var mo=MONTHS[m[1].toLowerCase()];
+  return mo? m[3]+'-'+pad(mo)+'-'+pad(+m[2]) : null;
+}
+function parsePrice(s){
+  var out={gbp:null,usd:null,eur:null}, order=['gbp','usd','eur'], sym={'£':'gbp','$':'usd','€':'eur'};
+  var toks=(s||'').split('/').map(function(x){return x.trim();}).filter(Boolean);
+  toks.forEach(function(x,i){
+    var v=parseFloat(x.replace(/[^\d.]/g,'')); if(isNaN(v)) return;
+    var k=toks.length===3? order[i] : (sym[x.charAt(0)]||order[i]);
+    if(out[k]==null) out[k]=v;
+  });
+  out.unit=/per box/i.test(s||'');
+  return out;
+}
+function validRaw(d){
+  return d && Array.isArray(d.rows) && d.rows.length>=50 && d.rows.every(function(r){
+    return Array.isArray(r) && r.length===6 && r.every(function(x){return typeof x==='string';});});
+}
+function build(raw){
+  var map=new Map();
+  raw.rows.forEach(function(r){
+    var m=/^(\S+)\s+(.*)$/.exec(r[3]); if(!m) return;
+    var date=parseDate(r[2]), year=date? +date.slice(0,4) : (+r[1]||null);
+    if(!year) return;
+    var end=date|| (year+'-12-31');
+    var pcs=/([\d,]+)\s+pieces/.exec(r[5]), rel=/Released\s+(.*)$/.exec(r[5]);
+    var relIso=rel? parseDate(rel[1]) : null, relYear=rel&&/(\d{4})/.exec(rel[1]);
+    var s={n:m[1],name:m[2],theme:r[0],year:year,date:date,end:end,price:parsePrice(r[4]),
+           pcs:pcs? +pcs[1].replace(/,/g,'') : null, rel:relIso|| (relYear? relYear[1]+'-01-01':null), alt:[]};
+    var prev=map.get(s.n);
+    if(!prev){map.set(s.n,s);return;}
+    if(prev.end===s.end && !!prev.date===!!s.date) return;        // exact duplicate
+    if(s.end<prev.end){ s.alt=prev.alt.concat([{date:prev.date,year:prev.year}]); map.set(s.n,s); }
+    else prev.alt.push({date:s.date,year:s.year});
+  });
+  return Array.from(map.values());
+}
+
+/* ---------- state ---------- */
+var raw=validRaw(window.EOL_DATA)? window.EOL_DATA : {rows:[],updated:'',fetched:''};
+var sets=build(raw);
+var favs=new Set(lsGet(LS_FAV)||[]);
+var pref=Object.assign({mode:'auto',lang:'en',cur:'eur',year:'all',state:'live',theme:'',sort:'date',fav:false},lsGet(LS_PREF)||{});
+if(!I18N[pref.lang]) pref.lang='en';
+var q='';
+var today=new Date(); today.setHours(0,0,0,0);
+var todayIso=today.getFullYear()+'-'+pad(today.getMonth()+1)+'-'+pad(today.getDate());
+var CUR={eur:['EUR','€'],gbp:['GBP','£'],usd:['USD','$']};
+function d(iso){var p=iso.split('-');return new Date(+p[0],+p[1]-1,+p[2]);}
+function daysTo(iso){return Math.round((d(iso)-today)/864e5);}
+function money(v,cur){return new Intl.NumberFormat(L.locale,{style:'currency',currency:CUR[cur][0]}).format(v);}
+function priceOf(s){return s.price[pref.cur];}
+function human(n){
+  if(n<0) return t('retired');
+  if(n===0) return t('lastDay');
+  if(n<60) return t('inDays',n);
+  if(n<730) return t('inMonths',Math.round(n/30.44));
+  return t('inYears',new Intl.NumberFormat(L.locale,{maximumFractionDigits:1}).format(n/365.25));
+}
+function endLabel(s){return s.date? fmtLong.format(d(s.date)) : t('by',s.year);}
+function savePref(){lsSet(LS_PREF,pref);}
+
+/* ---------- controls ---------- */
+function seg(el,opts,key,after){
+  el.innerHTML=opts.map(function(o){return '<button data-v="'+esc(o[0])+'" aria-pressed="'+(String(pref[key])===String(o[0]))+'">'+esc(o[1])+'</button>';}).join('');
+  el.onclick=function(e){var b=e.target.closest('button'); if(!b) return;
+    pref[key]=b.dataset.v; savePref();
+    el.querySelectorAll('button').forEach(function(x){x.setAttribute('aria-pressed',x===b);});
+    (after||render)();};
+}
+function setupControls(){
+  var years=Array.from(new Set(sets.map(function(s){return s.year;}))).sort();
+  if(pref.year!=='all' && years.indexOf(+pref.year)<0) pref.year='all';
+  seg($('segYear'),[['all',t('all')]].concat(years.map(function(y){return [y,String(y)];})),'year');
+  seg($('segState'),[['live',t('live')],['gone',t('gone')],['all',t('all')]],'state');
+  seg($('segCur'),[['eur','€'],['gbp','£'],['usd','$']],'cur');
+  seg($('segLang'),[['en','EN'],['it','IT']],'lang',applyLang);
+  var counts={}; sets.forEach(function(s){counts[s.theme]=(counts[s.theme]||0)+1;});
+  var themes=Object.keys(counts).sort(function(a,b){return a.localeCompare(b,L.locale,{sensitivity:'base'});});
+  if(pref.theme && !counts[pref.theme]) pref.theme='';
+  $('theme').innerHTML='<option value="">'+esc(t('allThemes'))+'</option>'+themes.map(function(x){
+    return '<option value="'+esc(x)+'">'+esc(x)+' ('+counts[x]+')</option>';}).join('');
+  $('theme').value=pref.theme; $('sort').value=pref.sort;
+  $('favBtn').setAttribute('aria-pressed',!!pref.fav);
+}
+function renderGuide(){
+  $('guideBody').innerHTML=L.guide.map(function(g){
+    return '<section class="gsec"><div class="ico" aria-hidden="true">'+g[0]+'</div><div><h4>'+esc(g[1])+'</h4><ul>'+
+      g[2].map(function(x){return '<li>'+esc(x)+'</li>';}).join('')+'</ul></div></section>';}).join('');
+}
+function applyLang(){
+  L=I18N[pref.lang];
+  fmtLong=new Intl.DateTimeFormat(L.locale,{day:'numeric',month:'long',year:'numeric'});
+  fmtMon=new Intl.DateTimeFormat(L.locale,{month:'short',year:'numeric'});
+  fmtDay=new Intl.DateTimeFormat(L.locale,{day:'numeric',month:'short'});
+  fmtNum=new Intl.NumberFormat(L.locale);
+  document.documentElement.lang=pref.lang; document.title=L.title;
+  document.querySelectorAll('[data-t]').forEach(function(e){e.textContent=L[e.dataset.t];});
+  document.querySelectorAll('[data-t-ph]').forEach(function(e){e.placeholder=L[e.dataset.tPh];});
+  document.querySelectorAll('[data-t-aria]').forEach(function(e){e.setAttribute('aria-label',L[e.dataset.tAria]);});
+  setupControls(); renderGuide(); renderHead(); render();
+}
+
+/* ---------- header ---------- */
+function renderHead(){
+  var live=sets.filter(function(s){return s.end>=todayIso;});
+  var next=live.filter(function(s){return s.date;}).map(function(s){return s.date;}).sort()[0];
+  var nextN=next? live.filter(function(s){return s.date===next;}).length : 0;
+  var themes=new Set(sets.map(function(s){return s.theme;})).size;
+  var h='<div class="stat glass blur"><b>'+fmtNum.format(live.length)+'</b><span>'+esc(t('statLive',themes))+'</span></div>';
+  if(next){var n=daysTo(next);
+    h+='<div class="stat glass blur'+(n<60?' hot':'')+'"><b>'+esc(n===0?t('today'):t('days',n))+'</b><span>'+esc(t('statNext',fmtLong.format(d(next))))+'</span></div>'+
+       '<div class="stat glass blur"><b>'+fmtNum.format(nextN)+'</b><span>'+esc(t('statThatDay'))+'</span></div>';}
+  var upd=parseDate(raw.updated);
+  h+='<div class="stat glass blur"><b>'+esc(upd? fmtDay.format(d(upd)) : '—')+'</b><span>'+esc(t('statUpdated'))+'</span></div>';
+  $('stats').innerHTML=h;
+  $('foot').textContent=[raw.updated? t('listOf',upd?fmtLong.format(d(upd)):raw.updated):null,
+    raw.fetched? t('imported',fmtLong.format(d(raw.fetched))):null].filter(Boolean).join(' · ');
+}
+
+/* ---------- list ---------- */
+var STAR='<svg viewBox="0 0 20 20" fill="currentColor"><path d="M10 1.6l2.5 5.3 5.8.7-4.3 4 1.1 5.8L10 14.6l-5.1 2.8L6 11.6l-4.3-4 5.8-.7z"/></svg>';
+function card(s){
+  var n=daysTo(s.end), p=priceOf(s), cls=n<0?'':(n<60?' soon':(n<200?' mid':''));
+  var img=/^\d+$/.test(s.n)? '<img loading="lazy" decoding="async" alt="" src="https://images.brickset.com/sets/images/'+s.n+'-1.jpg" onerror="if(this.dataset.f){this.remove()}else{this.dataset.f=1;this.src=this.src.replace(\'/images/\',\'/small/\')}">' : '';
+  var meta=[s.pcs? t('pieces',fmtNum.format(s.pcs)):null, s.rel? t('since',fmtMon.format(d(s.rel))):null].filter(Boolean).join(' · ');
+  var alt=s.alt.length? t('also',s.alt.map(function(a){return a.date?fmtLong.format(d(a.date)):String(a.year);}).join(', ')) : '';
+  return '<article class="card glass'+(n<0?' gone':'')+'">'+
+    '<button class="star" data-fav="'+esc(s.n)+'" aria-pressed="'+favs.has(s.n)+'" aria-label="'+esc(t('fav'))+'">'+STAR+'</button>'+
+    '<div class="pic"><i>'+esc(s.n)+'</i>'+img+'</div>'+
+    '<div class="body"><div class="meta">'+esc(s.n)+' · '+esc(s.theme)+'</div>'+
+    '<div class="name" title="'+esc(s.name)+'">'+esc(s.name)+'</div>'+
+    '<div class="meta">'+esc(meta)+'</div>'+
+    '<div class="note" title="'+esc(alt)+'">'+esc(alt)+'</div>'+
+    '<div class="foot"><div class="price">'+(p!=null? esc(money(p,pref.cur))+(s.price.unit?' <small>'+esc(t('perBag'))+'</small>':'') : '<small>'+esc(t('noPrice',CUR[pref.cur][1]))+'</small>')+'</div>'+
+    '<span class="badge'+cls+'" title="'+esc(endLabel(s))+'">'+esc(human(n))+'</span></div>'+
+    '<div class="links"><a href="https://www.lego.com/'+L.lego+'/search?q='+encodeURIComponent(s.n)+'" target="_blank" rel="noopener">'+esc(t('find'))+'</a></div>'+
+    '</div></article>';
+}
+function filtered(){
+  var words=q.toLowerCase().split(/\s+/).filter(Boolean);
+  return sets.filter(function(s){
+    if(pref.year!=='all' && s.year!==+pref.year) return false;
+    if(pref.state==='live' && s.end<todayIso) return false;
+    if(pref.state==='gone' && s.end>=todayIso) return false;
+    if(pref.theme && s.theme!==pref.theme) return false;
+    if(pref.fav && !favs.has(s.n)) return false;
+    if(words.length){var hay=(s.n+' '+s.name+' '+s.theme).toLowerCase();
+      for(var i=0;i<words.length;i++) if(hay.indexOf(words[i])<0) return false;}
+    return true;});
+}
+function byName(a,b){return a.name.localeCompare(b.name,L.locale);}
+function nSets(n){return n===1? t('oneSet') : t('sets',fmtNum.format(n));}
+function render(){
+  var list=filtered(), html='';
+  var tot=0, has=0; list.forEach(function(s){var p=priceOf(s); if(p!=null && !s.price.unit){tot+=p;has++;}});
+  $('count').textContent=list.length? nSets(list.length)+(has?' · '+t('listValue',money(tot,pref.cur)):'') : '';
+  if(!list.length){
+    html='<div class="empty"><b>'+esc(t('none'))+'</b>'+esc(sets.length?t('noneHint'):t('noData'))+'</div>';
+  } else if(pref.sort==='date'){
+    var groups=new Map();
+    list.slice().sort(function(a,b){return a.end<b.end?-1:a.end>b.end?1:(!!b.date-!!a.date)||byName(a,b);}).forEach(function(s){
+      var k=s.date||('y'+s.year); if(!groups.has(k)) groups.set(k,[]); groups.get(k).push(s);});
+    groups.forEach(function(arr){
+      var s=arr[0], n=daysTo(s.end);
+      html+='<section class="group"><div class="ghead"><h2>'+esc(s.date? fmtLong.format(d(s.date)) : t('inYear',s.year))+'</h2><span>'+
+        esc(s.date? human(n) : t('tbc'))+' · '+esc(nSets(arr.length))+'</span></div><div class="grid">'+arr.map(card).join('')+'</div></section>';});
+  } else {
+    var cmp={priceDesc:function(a,b){return (priceOf(b)||0)-(priceOf(a)||0);},
+      priceAsc:function(a,b){return (priceOf(a)==null?1e9:priceOf(a))-(priceOf(b)==null?1e9:priceOf(b));},
+      pcs:function(a,b){return (b.pcs||0)-(a.pcs||0);},
+      rel:function(a,b){return (b.rel||'')<(a.rel||'')?-1:(b.rel||'')>(a.rel||'')?1:0;},
+      name:byName,
+      num:function(a,b){return a.n.localeCompare(b.n,L.locale,{numeric:true});}}[pref.sort];
+    html='<section class="group"><div class="grid">'+list.slice().sort(function(a,b){return cmp(a,b)||byName(a,b);}).map(card).join('')+'</div></section>';
+  }
+  $('list').innerHTML=html;
+}
+
+/* ---------- start ---------- */
+$('q').addEventListener('input',function(){q=this.value; render();});
+$('theme').onchange=function(){pref.theme=this.value; savePref(); render();};
+$('sort').onchange=function(){pref.sort=this.value; savePref(); render();};
+$('favBtn').onclick=function(){pref.fav=!pref.fav; savePref(); this.setAttribute('aria-pressed',pref.fav); render();};
+function isDark(){return pref.mode==='dark' || (pref.mode!=='light' && window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches);}
+function applyMode(){
+  if(pref.mode==='dark'||pref.mode==='light') document.documentElement.setAttribute('data-mode',pref.mode);
+  else document.documentElement.removeAttribute('data-mode');
+  var dk=isDark(); $('modeBtn').textContent=dk?'☀':'☾'; $('modeBtn').setAttribute('aria-pressed',dk);
+  document.querySelectorAll('meta[name="theme-color"]').forEach(function(m){m.removeAttribute('media'); m.content=dk?'#07080c':'#eef1fa';});
+}
+$('modeBtn').onclick=function(){pref.mode=isDark()?'light':'dark'; savePref(); applyMode();};
+if(window.matchMedia) matchMedia('(prefers-color-scheme: dark)').addEventListener('change',applyMode);
+applyMode();
+$('guideBtn').onclick=function(){$('guide').showModal(); $('guide').querySelector('.sheet').scrollTop=0;};
+$('guideClose').onclick=function(){$('guide').close();};
+$('guide').addEventListener('click',function(e){if(e.target===this) this.close();});
+$('list').addEventListener('click',function(e){
+  var b=e.target.closest('[data-fav]'); if(!b) return;
+  var n=b.dataset.fav; if(favs.has(n)) favs.delete(n); else favs.add(n);
+  lsSet(LS_FAV,Array.from(favs)); b.setAttribute('aria-pressed',favs.has(n));
+  if(pref.fav) render();
+});
+applyLang();
+}
+/* The list lives in data.js, regenerated separately: the app silently picks up the latest copy on every visit. */
+(function(){var s=document.createElement('script'); s.src='data.js?v='+Math.floor(Date.now()/36e5);
+  s.onload=s.onerror=startApp; document.head.appendChild(s);})();
+</script>
+</body>
+</html>
