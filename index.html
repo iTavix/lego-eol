@@ -6,7 +6,11 @@
 <title>LEGO EOL · Retiring sets</title>
 <meta name="theme-color" content="#eef1fa" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#07080c" media="(prefers-color-scheme: dark)">
-<link rel="icon" href="logo.png">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="favicon-16.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="apple-mobile-web-app-title" content="LEGO EOL">
 <script>try{var m=(JSON.parse(localStorage.getItem('eol.pref.v1'))||{}).mode;if(m==='dark'||m==='light')document.documentElement.setAttribute('data-mode',m);}catch(e){}</script>
 <style>
 :root{
@@ -15,7 +19,7 @@
   --glass-hi:rgba(255,255,255,.80); --glass:rgba(255,255,255,.46); --glass-border:rgba(255,255,255,.75);
   --spec:rgba(255,255,255,.95); --ctl:rgba(120,125,150,.14); --ctl-on:rgba(255,255,255,.92); --sep:rgba(60,60,90,.12);
   --shadow:0 10px 30px rgba(40,50,95,.11),0 1px 2px rgba(40,50,95,.06);
-  --red:#d70015; --orange:#c93400; --star:#ff9f0a;
+  --red:#d70015; --orange:#c93400; --green:#248a3d; --star:#ff9f0a;
 }
 :root{color-scheme:light}
 /* dark look: follows the system unless the visitor picks a mode with the toggle */
@@ -26,7 +30,7 @@
     --glass-hi:rgba(255,255,255,.13); --glass:rgba(255,255,255,.05); --glass-border:rgba(255,255,255,.16);
     --spec:rgba(255,255,255,.28); --ctl:rgba(255,255,255,.09); --ctl-on:rgba(255,255,255,.24); --sep:rgba(255,255,255,.12);
     --shadow:0 12px 34px rgba(0,0,0,.45);
-    --red:#ff453a; --orange:#ff9f0a;
+    --red:#ff453a; --orange:#ff9f0a; --green:#30d158;
   }
 }
 :root[data-mode="dark"]{color-scheme:dark;
@@ -35,7 +39,7 @@
   --glass-hi:rgba(255,255,255,.13); --glass:rgba(255,255,255,.05); --glass-border:rgba(255,255,255,.16);
   --spec:rgba(255,255,255,.28); --ctl:rgba(255,255,255,.09); --ctl-on:rgba(255,255,255,.24); --sep:rgba(255,255,255,.12);
   --shadow:0 12px 34px rgba(0,0,0,.45);
-  --red:#ff453a; --orange:#ff9f0a;
+  --red:#ff453a; --orange:#ff9f0a; --green:#30d158;
 }
 *{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%}
@@ -68,10 +72,14 @@ header.hero{padding:40px 0 20px}
 h1{font-size:clamp(32px,5.4vw,54px);line-height:1.07;font-weight:700;letter-spacing:-.03em;margin:0}
 .sub{font-size:19px;color:var(--text2);margin:10px 0 0;max-width:44em}
 .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin:26px 0 0}
-.stat{border-radius:24px;padding:16px 18px;min-height:104px}
+.stat{border-radius:24px;padding:16px 18px;min-height:104px;text-align:left;display:block;width:100%;color:inherit}
 .stat b{display:block;font-size:28px;line-height:1.15;font-weight:700;letter-spacing:-.025em;font-variant-numeric:tabular-nums}
 .stat span{font-size:13px;color:var(--text2)}
 .stat.hot b{color:var(--red)}
+button.stat{transition:transform .25s cubic-bezier(.2,.8,.2,1)}
+button.stat:hover{transform:translateY(-3px)}
+button.stat:active{transform:scale(.97)}
+button.stat span::after{content:" ›";color:var(--accent);font-weight:700}
 
 .bar{position:sticky;top:10px;z-index:20;margin-top:6px}
 .panel{border-radius:30px;padding:12px}
@@ -80,7 +88,7 @@ h1{font-size:clamp(32px,5.4vw,54px);line-height:1.07;font-weight:700;letter-spac
 .search{flex:1 1 150px;position:relative}
 .search input{width:100%;height:40px;border:0;border-radius:999px;background:var(--ctl);padding:0 16px 0 38px;outline:0;
   box-shadow:inset 0 1px 2px rgba(0,0,0,.06)}
-.search input:focus,select:focus-visible,button:focus-visible{outline:3px solid color-mix(in srgb,var(--accent) 45%,transparent);outline-offset:1px}
+.search input:focus,select:focus-visible,button:focus-visible,.card:focus-visible{outline:3px solid color-mix(in srgb,var(--accent) 45%,transparent);outline-offset:1px}
 .search svg{position:absolute;left:13px;top:12px;width:16px;height:16px;color:var(--text2)}
 .seg{display:inline-flex;background:var(--ctl);border-radius:999px;padding:3px;overflow-x:auto;max-width:100%;scrollbar-width:none;
   box-shadow:inset 0 1px 2px rgba(0,0,0,.06)}
@@ -93,33 +101,71 @@ select{height:40px;border:0;border-radius:999px;background-color:var(--ctl);padd
   background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M1 1l4 4 4-4' fill='none' stroke='%23888' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
   background-repeat:no-repeat;background-position:right 14px center}
 .pill{border:0;height:40px;border-radius:999px;padding:0 16px;font-size:14px;font-weight:600;background:var(--ctl);white-space:nowrap;
-  box-shadow:inset 0 1px 2px rgba(0,0,0,.06)}
+  box-shadow:inset 0 1px 2px rgba(0,0,0,.06);display:inline-flex;align-items:center;gap:6px;color:var(--text);transition:transform .15s}
+.pill:active{transform:scale(.95)}
+a.pill:hover{text-decoration:none}
 .pill[aria-pressed="true"]{background:var(--text);color:var(--base)}
 .pill.tint{background:var(--accent);color:#fff;box-shadow:inset 0 1px 0 rgba(255,255,255,.45),0 4px 14px color-mix(in srgb,var(--accent) 40%,transparent)}
-.pill.icon{width:40px;padding:0;font-size:17px;line-height:1}
+.pill.icon{width:40px;padding:0;font-size:17px;line-height:1;justify-content:center}
+.pill.sm{height:34px;padding:0 13px;font-size:13px;font-weight:500}
+.pill[disabled]{opacity:.45;cursor:default}
 .grow{flex:1}
 
-main{padding:8px 0 80px}
+/* explore panel: quick filters + timeline (scrolls with the page) */
+.explore{margin-top:12px;border-radius:30px;padding:12px}
+.chips{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.range{display:inline-flex;align-items:center;gap:10px;height:34px;padding:0 14px;border-radius:999px;background:var(--ctl);font-size:13px;font-weight:500}
+.range input{width:130px;accent-color:var(--accent)}
+.range output{min-width:86px;text-align:right;font-variant-numeric:tabular-nums}
+.tl{display:flex;gap:4px;overflow-x:auto;margin-top:12px;padding:4px 2px 2px;scrollbar-width:thin}
+.tl:empty{display:none}
+.tl-n{flex:1 0 108px;border:0;background:none;padding:6px 4px 4px;border-radius:18px;display:flex;flex-direction:column;align-items:center;gap:4px;position:relative;color:var(--text)}
+.tl-n:hover{background:var(--ctl)}
+.tl-col{height:50px;display:flex;align-items:flex-end}
+.tl-bar{width:34px;border-radius:9px 9px 4px 4px;background:linear-gradient(var(--accent),color-mix(in srgb,var(--accent) 55%,transparent));min-height:5px;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.5);transition:height .5s cubic-bezier(.2,.8,.2,1)}
+.tl-n.soon .tl-bar{background:linear-gradient(var(--red),color-mix(in srgb,var(--red) 55%,transparent))}
+.tl-n.mid .tl-bar{background:linear-gradient(var(--orange),color-mix(in srgb,var(--orange) 55%,transparent))}
+.tl-dot{width:10px;height:10px;border-radius:50%;background:var(--text);position:relative;z-index:1}
+.tl-n::before{content:"";position:absolute;left:0;right:0;top:65px;height:2px;background:var(--sep)}
+.tl-n b{font-size:12px;font-weight:600;white-space:nowrap}
+.tl-n small{font-size:11px;color:var(--text2);white-space:nowrap}
+
+main{padding:8px 0 110px}
 .count{font-size:14px;color:var(--text2);margin:18px 4px 0}
-section.group{margin-top:32px}
+section.group{margin-top:32px;scroll-margin-top:calc(var(--barh,130px) + 28px)}
 .ghead{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;margin:0 4px 14px}
 .ghead h2{font-size:26px;line-height:1.15;font-weight:700;letter-spacing:-.025em;margin:0}
 .ghead span{font-size:15px;color:var(--text2)}
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(232px,1fr));gap:14px}
 
 /* every card has the same structure and the same fixed slots, so all cards are the same size */
-.card{border-radius:28px;padding:8px;display:flex;flex-direction:column;position:relative;min-width:0}
+.card{border-radius:28px;padding:8px;display:flex;flex-direction:column;position:relative;min-width:0;cursor:pointer;
+  transition:transform .3s cubic-bezier(.2,.8,.2,1),box-shadow .3s}
+.card:hover{transform:translateY(-5px)}
+.card:active{transform:scale(.985)}
+.card::after{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;opacity:0;transition:opacity .3s;z-index:1;
+  background:radial-gradient(260px circle at var(--mx,50%) var(--my,0%),rgba(255,255,255,.38),transparent 62%)}
+.card:hover::after{opacity:1}
+.card.rv{opacity:0;translate:0 16px}
+.card.rv.in{opacity:1;translate:none;transition:opacity .5s,translate .5s cubic-bezier(.2,.8,.2,1),transform .3s cubic-bezier(.2,.8,.2,1)}
+.card.rv.now{transition:transform .3s cubic-bezier(.2,.8,.2,1)}
 .pic{aspect-ratio:4/3;background:#fff;border-radius:21px;overflow:hidden;display:grid;place-items:center;position:relative;
   box-shadow:inset 0 0 0 1px rgba(0,0,0,.05)}
 /* the picture is pinned to the tile and scaled down whole: never cropped, whatever its proportions */
 .pic img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;object-position:center;padding:14px;display:block}
 .pic i{position:absolute;font-style:normal;font-size:24px;font-weight:700;color:#d2d2d7;letter-spacing:-.02em}
-.star{position:absolute;top:15px;right:15px;width:36px;height:36px;border:1px solid rgba(255,255,255,.8);border-radius:50%;
+.star,.cmpb{position:absolute;top:15px;width:36px;height:36px;border:1px solid rgba(255,255,255,.8);border-radius:50%;
   background:rgba(255,255,255,.62);color:#a9a9b2;display:grid;place-items:center;z-index:2;
   -webkit-backdrop-filter:blur(10px) saturate(180%);backdrop-filter:blur(10px) saturate(180%);
-  box-shadow:inset 0 1px 0 #fff,0 3px 10px rgba(20,25,60,.14)}
+  box-shadow:inset 0 1px 0 #fff,0 3px 10px rgba(20,25,60,.14);transition:transform .15s}
+.star{right:15px} .cmpb{left:15px;font-size:17px;font-weight:700;line-height:1}
+.star:active,.cmpb:active{transform:scale(.88)}
 .star svg{width:17px;height:17px}
 .star[aria-pressed="true"]{color:var(--star)}
+.cmpb[aria-pressed="true"]{background:var(--accent);color:#fff;border-color:transparent}
+.pop{animation:pop .4s cubic-bezier(.3,1.6,.5,1)}
+@keyframes pop{0%{transform:scale(.6)}60%{transform:scale(1.25)}100%{transform:scale(1)}}
 .body{padding:12px 8px 6px;display:flex;flex-direction:column;min-width:0}
 .meta{font-size:12px;line-height:18px;height:18px;color:var(--text2);font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .name{font-size:17px;line-height:21px;height:42px;font-weight:600;letter-spacing:-.02em;margin:2px 0 4px;
@@ -128,38 +174,104 @@ section.group{margin-top:32px}
 .foot{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:8px;height:28px}
 .price{font-size:20px;line-height:28px;font-weight:700;letter-spacing:-.02em;font-variant-numeric:tabular-nums;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
 .price small{font-size:12px;font-weight:400;color:var(--text2);letter-spacing:0}
-.badge{flex:none;font-size:12px;line-height:24px;height:24px;font-weight:600;padding:0 10px;border-radius:999px;background:var(--ctl);color:var(--text2);white-space:nowrap}
+.badge{flex:none;font-size:12px;line-height:24px;height:24px;font-weight:600;padding:0 10px;border-radius:999px;background:var(--ctl);color:var(--text2);white-space:nowrap;display:inline-block}
 .badge.soon{background:color-mix(in srgb,var(--red) 14%,transparent);color:var(--red)}
 .badge.mid{background:color-mix(in srgb,var(--orange) 15%,transparent);color:var(--orange)}
-.links{font-size:12px;line-height:18px;height:18px;margin-top:8px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.links{font-size:12px;line-height:18px;height:18px;margin-top:8px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;position:relative;z-index:2}
 .gone .pic img{filter:grayscale(1);opacity:.6}
 .empty{text-align:center;color:var(--text2);padding:70px 0}
 .empty b{display:block;font-size:22px;color:var(--text);margin-bottom:4px}
 footer{color:var(--text2);font-size:12px;padding:0 0 50px}
 
+/* sheets */
 dialog{border:0;padding:0;background:none;color:var(--text);width:min(640px,calc(100vw - 24px));max-height:calc(100vh - 40px);overflow:visible}
+dialog.wide{width:min(900px,calc(100vw - 24px))}
+dialog[open]{animation:rise .32s cubic-bezier(.2,.8,.2,1)}
+@keyframes rise{from{opacity:0;transform:translateY(18px) scale(.97)}to{opacity:1;transform:none}}
 dialog::backdrop{background:rgba(10,12,30,.28);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
-.sheet{border-radius:34px;padding:26px 26px 22px;max-height:calc(100vh - 40px);overflow:auto}
-.sheet h3{font-size:28px;line-height:1.1;font-weight:700;letter-spacing:-.028em;margin:0 0 4px}
+.sheet{border-radius:34px;padding:26px 26px 22px;max-height:calc(100vh - 40px);overflow:auto;position:relative}
+/* sheets and the compare bar sit on a denser glass so text stays readable over busy content */
+.sheet.glass,.cmpbar.glass{background:linear-gradient(155deg,var(--glass-hi),var(--glass) 62%),color-mix(in srgb,var(--base) 62%,transparent)}
+.sheet h3{font-size:28px;line-height:1.1;font-weight:700;letter-spacing:-.028em;margin:0 44px 4px 0}
 .sheet .lead{margin:0 0 14px;font-size:15px;color:var(--text2)}
+.x{position:absolute;top:18px;right:18px;width:36px;height:36px;border:0;border-radius:50%;background:var(--ctl);font-size:15px;line-height:1;color:var(--text);
+  box-shadow:inset 0 1px 0 var(--spec)}
 .gsec{border-top:1px solid var(--sep);padding:14px 0 12px;display:grid;grid-template-columns:34px 1fr;gap:0 12px}
 .gsec .ico{width:34px;height:34px;border-radius:50%;background:var(--ctl);display:grid;place-items:center;font-size:16px;
   box-shadow:inset 0 1px 0 var(--spec)}
 .gsec h4{margin:0 0 2px;font-size:17px;font-weight:600;letter-spacing:-.02em}
 .gsec ul{margin:0;padding:0 0 0 18px;font-size:14px;line-height:1.45;color:var(--text2)}
 .gsec li{margin:3px 0}
-.sheet .actions{display:flex;justify-content:flex-end;margin-top:6px}
+.sheet .actions{display:flex;justify-content:flex-end;gap:8px;flex-wrap:wrap;margin-top:14px}
+
+/* set detail */
+.dt{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,6fr);gap:22px;align-items:start}
+.dt .pic{aspect-ratio:1/1;border-radius:24px}
+.dt .pic img{padding:18px}
+.dt h3{font-size:26px;margin:4px 0 8px}
+.dt .meta{height:auto;white-space:normal}
+.prices{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:14px 0}
+.prices div{border-radius:16px;background:var(--ctl);padding:8px 10px;font-size:12px;color:var(--text2)}
+.prices b{display:block;font-size:17px;color:var(--text);font-variant-numeric:tabular-nums}
+.prices .on{background:var(--ctl-on);box-shadow:inset 0 1px 0 var(--spec),0 2px 8px rgba(20,25,60,.14)}
+.facts{margin:0;display:grid;grid-template-columns:auto 1fr;gap:6px 14px;font-size:14px}
+.facts dt{color:var(--text2)} .facts dd{margin:0;font-weight:600;text-align:right}
+.life{margin-top:18px}
+.life .track{height:12px;border-radius:999px;background:var(--ctl);position:relative;box-shadow:inset 0 1px 2px rgba(0,0,0,.1)}
+.life .fill{position:absolute;left:0;top:0;bottom:0;border-radius:999px;background:linear-gradient(90deg,var(--green),var(--orange) 70%,var(--red));width:0;transition:width .9s cubic-bezier(.2,.8,.2,1)}
+.life .now{position:absolute;top:-5px;width:22px;height:22px;margin-left:-11px;border-radius:50%;background:#fff;border:3px solid var(--text);left:0;transition:left .9s cubic-bezier(.2,.8,.2,1);
+  box-shadow:0 2px 8px rgba(0,0,0,.25)}
+.life .ends{display:flex;justify-content:space-between;font-size:12px;color:var(--text2);margin-top:9px;gap:10px}
+.life p{margin:6px 0 0;font-size:13px;font-weight:600;text-align:center}
+
+/* favourites list */
+.frow{display:grid;grid-template-columns:56px 1fr auto 34px;gap:12px;align-items:center;padding:10px 0;border-top:1px solid var(--sep);cursor:pointer}
+.frow .pic{width:56px;aspect-ratio:1/1;border-radius:13px}
+.frow .pic img{padding:5px} .frow .pic i{font-size:10px}
+.frow b{display:block;font-size:15px;line-height:1.25;letter-spacing:-.015em}
+.frow small{font-size:12px;color:var(--text2)}
+.frow .p{font-weight:700;font-variant-numeric:tabular-nums;white-space:nowrap;text-align:right}
+.frow .rm{width:34px;height:34px;border:0;border-radius:50%;background:var(--ctl);font-size:13px;color:var(--text2)}
+.ftot{display:flex;justify-content:space-between;align-items:baseline;border-top:1px solid var(--sep);padding-top:14px;margin-top:2px;font-size:15px}
+.ftot b{font-size:24px;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+
+/* comparison */
+.cmpbar{position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:30;border-radius:999px;padding:8px 8px 8px 18px;display:flex;align-items:center;gap:10px;
+  font-size:14px;font-weight:600;max-width:calc(100vw - 24px);animation:rise .3s cubic-bezier(.2,.8,.2,1)}
+.cmpbar[hidden]{display:none}
+.cmpbar .th{display:flex}
+.cmpbar .th span{width:34px;height:34px;border-radius:50%;background:#fff center/contain no-repeat;border:2px solid var(--glass-border);margin-left:-8px;box-shadow:0 2px 6px rgba(0,0,0,.15)}
+.cmpbar .th span:first-child{margin-left:0}
+.ct{display:grid;gap:0 14px;overflow-x:auto}
+.ct > div{padding:9px 0;border-top:1px solid var(--sep);font-size:14px;min-width:0}
+.ct .l{color:var(--text2);font-size:13px;white-space:nowrap}
+.ct .h{border-top:0;padding-top:0}
+.ct .h .pic{aspect-ratio:4/3;border-radius:18px;margin-bottom:8px;cursor:pointer}
+.ct .h b{display:block;font-size:15px;line-height:1.25}
+.ct .v{font-weight:600}
+.ct .best{color:var(--green)}
+.ct .best small{display:block;font-size:11px;font-weight:500}
 
 @media (max-width:640px){
   .wrap{padding:0 14px} header.hero{padding-top:22px}
   .head{flex-direction:column;align-items:flex-start;gap:12px} .logo{height:72px}
   .sub{font-size:17px}
   .bar{position:static}
+  .chips{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;padding-bottom:2px} .chips::-webkit-scrollbar{display:none}
+  .chips > *{flex:none}
   .grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
-  .card{border-radius:24px;padding:6px} .pic{border-radius:18px} .pic img{padding:9px} .star{top:11px;right:11px;width:32px;height:32px}
+  .card{border-radius:24px;padding:6px} .pic{border-radius:18px} .pic img{padding:9px}
+  .star,.cmpb{top:11px;width:32px;height:32px} .star{right:11px} .cmpb{left:11px}
   .name{font-size:15px;line-height:19px;height:38px} .price{font-size:17px}
   .foot{flex-direction:column;align-items:flex-start;height:56px;gap:4px}
   .sheet{padding:22px 18px 18px;border-radius:28px}
+  .dt{grid-template-columns:1fr;gap:14px;margin-top:36px} .dt .pic{aspect-ratio:4/3}
+  .frow{grid-template-columns:48px 1fr auto 30px;gap:9px} .frow .pic{width:48px}
+  section.group{scroll-margin-top:16px}
+}
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  .card.rv{opacity:1;translate:none}
 }
 </style>
 </head>
@@ -185,7 +297,7 @@ dialog::backdrop{background:rgba(10,12,30,.28);-webkit-backdrop-filter:blur(8px)
     </label>
     <div class="seg" id="segCur" role="group" data-t-aria="currency"></div>
     <div class="seg" id="segLang" role="group" aria-label="Language"></div>
-    <button class="pill" id="favBtn" aria-pressed="false" data-t="favs">★ Favorites</button>
+    <button class="pill" id="favBtn" aria-haspopup="dialog">★ Favorites</button>
     <button class="pill icon" id="modeBtn" aria-pressed="false" data-t-aria="dark"></button>
     <button class="pill tint" id="guideBtn" data-t="guideBtn">Guide</button>
   </div>
@@ -207,6 +319,10 @@ dialog::backdrop{background:rgba(10,12,30,.28);-webkit-backdrop-filter:blur(8px)
 </div></div></div>
 
 <main><div class="wrap">
+  <div class="explore glass">
+    <div class="chips" id="chips"></div>
+    <div class="tl" id="tl" role="group" data-t-aria="timeline"></div>
+  </div>
   <p class="count" id="count"></p>
   <div id="list"></div>
 </div></main>
@@ -216,12 +332,30 @@ dialog::backdrop{background:rgba(10,12,30,.28);-webkit-backdrop-filter:blur(8px)
   <span data-t="disclaimer"></span>
 </div></footer>
 
+<div class="cmpbar glass blur" id="cmpBar" hidden></div>
+
 <dialog id="guide" aria-labelledby="guideTitle">
   <div class="sheet glass blur">
+    <button class="x" data-close data-t-aria="close">✕</button>
     <h3 id="guideTitle" data-t="guideTitle"></h3>
     <p class="lead" data-t="guideLead"></p>
     <div id="guideBody"></div>
-    <div class="actions"><button class="pill tint" id="guideClose" data-t="done"></button></div>
+    <div class="actions"><button class="pill tint" data-close data-t="done"></button></div>
+  </div>
+</dialog>
+<dialog id="detail" class="wide"><div class="sheet glass blur" id="detailBody"></div></dialog>
+<dialog id="favs" aria-labelledby="favTitle">
+  <div class="sheet glass blur">
+    <button class="x" data-close data-t-aria="close">✕</button>
+    <h3 id="favTitle" data-t="favTitle"></h3>
+    <div id="favBody"></div>
+  </div>
+</dialog>
+<dialog id="cmp" class="wide" aria-labelledby="cmpTitle">
+  <div class="sheet glass blur">
+    <button class="x" data-close data-t-aria="close">✕</button>
+    <h3 id="cmpTitle" data-t="cmpTitle"></h3>
+    <div id="cmpBody"></div>
   </div>
 </dialog>
 
@@ -235,6 +369,7 @@ function lsGet(k){try{return JSON.parse(localStorage.getItem(k));}catch(e){retur
 function lsSet(k,v){try{localStorage.setItem(k,JSON.stringify(v));return true;}catch(e){return false;}}
 function esc(s){return String(s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});}
 function pad(n){return (n<10?'0':'')+n;}
+var CALM=window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 /* ---------- translations: English is the default, Italian is optional ---------- */
 var I18N={
@@ -252,14 +387,26 @@ var I18N={
   find:'Find on LEGO.com ↗', none:'No sets found', noneHint:'Try changing filters or search.', noData:'Data temporarily unavailable.',
   listOf:'List dated {0}', imported:'refreshed {0}',
   disclaimer:'Retirement dates are unofficial forecasts and may change. Not affiliated with or sponsored by the LEGO Group. Images: Brickset.',
-  dark:'Dark mode', guideBtn:'Guide', done:'Done', guideTitle:'How it works',
+  dark:'Dark mode', close:'Close', timeline:'Timeline',
+  qNext:'Next deadline', qSoon:'Next 60 days', qUnder:'Under {0}', qBig:'2,000+ pieces', qFresh:'Released this year',
+  anyPrice:'Any price', upTo:'Up to {0}', maxPrice:'Maximum price', reset:'✕ Reset',
+  piecesL:'Pieces', pricePer:'Price per piece', released:'Released', onShelves:'On shelves for', retires:'Retires', themeL:'Theme', priceL:'Price', countdown:'Countdown',
+  life:'{0}% of its shelf life gone', y1:'1 year', yN:'{0} years', m1:'1 month', mN:'{0} months', lt1:'less than a month',
+  addFav:'☆ Add to favorites', remFav:'★ In favorites', addCmp:'⇄ Compare', remCmp:'⇄ In comparison', cmpAria:'Compare',
+  cal:'Add to calendar', calSum:'LEGO {0} {1} retires', lego:'LEGO.com ↗',
+  favTitle:'Your favorites', favEmpty:'No favorites yet. Tap the star on a set to save it here.', total:'Total',
+  onlyFavs:'Show only these in the list', copy:'Copy list', copied:'Copied ✓', share:'Share', remove:'Remove', retiresOn:'retires {0}',
+  cmpTitle:'Compare sets', cmpSel:'{0} selected', cmpGo:'Compare', clear:'Clear', cmpHint:'Select at least two sets with the ⇄ button on the cards.', best:'best value',
+  guideBtn:'Guide', done:'Done', guideTitle:'How it works',
   guideLead:'A quick tour of what you can see and do here.',
   guide:[
-   ['📦','What this is',['Every LEGO set expected to leave production (“End of Life”), with its expected retirement date.','The tiles at the top show how many sets are still retiring, the days left until the next deadline and how many sets leave on that day.']],
+   ['📦','What this is',['Every LEGO set expected to leave production (“End of Life”), with its expected retirement date.','The tiles at the top show how many sets are still retiring, the days left until the next deadline and how many sets leave on that day. Tap a tile to jump straight to those sets.']],
    ['🗂️','Reading a card',['Top line: set number and theme. Below: name, piece count and release month.','Price is the official list price in the currency you chose.','The pill is the countdown: red under 60 days, orange under 200 days, grey beyond that.','A greyed-out picture means the set has already retired.','An orange note appears when the source lists the same set under two different dates.']],
-   ['🔎','Search and filters',['Search by name, set number or theme: results update as you type.','Filter by retirement year, by status (Retiring, Retired, All) and by theme.','Filters combine, and the line above the list shows how many sets match and their total list value.']],
-   ['↕️','Sorting',['“Retirement date” groups sets by deadline, nearest first.','You can also sort by price, piece count, newest release, name or set number.','Groups titled “In 2027” hold sets with a known year but no exact day yet.']],
-   ['⭐','Favorites',['Tap the star on a card to save the set.','“★ Favorites” shows only your saved sets: a handy shopping list before they disappear.','Favorites are stored on this device only.']],
+   ['🔍','Set details',['Tap a card to open its detail sheet: large picture, prices in all three currencies and price per piece.','The life bar shows how far the set is between its release and its retirement.','“Add to calendar” saves the retirement day with a reminder two weeks earlier.']],
+   ['🔎','Search and filters',['Search by name, set number or theme: results update as you type.','Filter by retirement year, by status (Retiring, Retired, All) and by theme.','Quick filters add one-tap shortcuts (next deadline, next 60 days, low price, big sets, this year’s releases) and a maximum-price slider.','Filters combine, and the line above the list shows how many sets match and their total list value.']],
+   ['📅','Timeline and sorting',['The timeline shows every deadline with the number of sets leaving: tap one to jump to it.','“Retirement date” groups sets by deadline, nearest first. You can also sort by price, piece count, newest release, name or set number.','Groups titled “In 2027” hold sets with a known year but no exact day yet.']],
+   ['⭐','Favorites',['Tap the star on a card to save the set.','“★ Favorites” opens your list, most urgent first, with the total to spend.','From there you can copy or share the list, or show only those sets in the main list.','Favorites are stored on this device only.']],
+   ['⇄','Compare',['Tap ⇄ on up to three cards, then “Compare” in the bar at the bottom.','Sets are shown side by side; the best price per piece is highlighted.']],
    ['🌍','Currency, language and appearance',['Switch prices between €, £ and $.','Use the ☾ / ☀ button to switch between dark and light appearance.','Switch the interface between English (EN) and Italian (IT). Your choices are remembered.']],
    ['🔄','Data and updates',['The list is kept up to date behind the scenes: there is nothing to do.','The footer shows the date of the list in use.','Dates are unofficial forecasts and can change: check LEGO.com before buying, using the link on each card.']]
   ]},
@@ -277,19 +424,31 @@ var I18N={
   find:'Cerca su LEGO.com ↗', none:'Nessun set trovato', noneHint:'Prova a cambiare filtri o ricerca.', noData:'Dati momentaneamente non disponibili.',
   listOf:'Lista del {0}', imported:'aggiornata in data {0}',
   disclaimer:'Le date di ritiro sono previsioni non ufficiali e possono cambiare. Sito non affiliato né sponsorizzato dal LEGO Group. Immagini: Brickset.',
-  dark:'Tema scuro', guideBtn:'Guida', done:'Fine', guideTitle:'Come funziona',
+  dark:'Tema scuro', close:'Chiudi', timeline:'Linea del tempo',
+  qNext:'Prossima scadenza', qSoon:'Entro 60 giorni', qUnder:'Sotto {0}', qBig:'Oltre 2.000 pezzi', qFresh:'Usciti quest’anno',
+  anyPrice:'Qualsiasi prezzo', upTo:'Fino a {0}', maxPrice:'Prezzo massimo', reset:'✕ Azzera',
+  piecesL:'Pezzi', pricePer:'Prezzo al pezzo', released:'Uscita', onShelves:'In commercio da', retires:'Ritiro', themeL:'Tema', priceL:'Prezzo', countdown:'Conto alla rovescia',
+  life:'{0}% della vita commerciale trascorso', y1:'1 anno', yN:'{0} anni', m1:'1 mese', mN:'{0} mesi', lt1:'meno di un mese',
+  addFav:'☆ Aggiungi ai preferiti', remFav:'★ Nei preferiti', addCmp:'⇄ Confronta', remCmp:'⇄ Nel confronto', cmpAria:'Confronta',
+  cal:'Aggiungi al calendario', calSum:'LEGO {0} {1}: ultimo giorno', lego:'LEGO.com ↗',
+  favTitle:'I tuoi preferiti', favEmpty:'Ancora nessun preferito. Tocca la stella su un set per salvarlo qui.', total:'Totale',
+  onlyFavs:'Mostra solo questi nell’elenco', copy:'Copia elenco', copied:'Copiato ✓', share:'Condividi', remove:'Rimuovi', retiresOn:'ritiro {0}',
+  cmpTitle:'Confronta i set', cmpSel:'{0} selezionati', cmpGo:'Confronta', clear:'Svuota', cmpHint:'Seleziona almeno due set con il pulsante ⇄ sulle schede.', best:'più conveniente',
+  guideBtn:'Guida', done:'Fine', guideTitle:'Come funziona',
   guideLead:'Un giro veloce di quello che puoi vedere e fare qui.',
   guide:[
-   ['📦','Che cos’è',['Tutti i set LEGO destinati a uscire di produzione (“End of Life”), con la data di ritiro prevista.','I riquadri in alto mostrano quanti set sono ancora in uscita, i giorni che mancano alla prossima scadenza e quanti set escono quel giorno.']],
+   ['📦','Che cos’è',['Tutti i set LEGO destinati a uscire di produzione (“End of Life”), con la data di ritiro prevista.','I riquadri in alto mostrano quanti set sono ancora in uscita, i giorni che mancano alla prossima scadenza e quanti set escono quel giorno. Tocca un riquadro per andare subito a quei set.']],
    ['🗂️','Come leggere una scheda',['Prima riga: numero del set e tema. Sotto: nome, numero di pezzi e mese di uscita.','Il prezzo è quello di listino ufficiale nella valuta scelta.','L’etichetta è il conto alla rovescia: rossa sotto i 60 giorni, arancione sotto i 200, grigia oltre.','Un’immagine in grigio indica un set già ritirato.','Una nota arancione compare quando la fonte riporta lo stesso set con due date diverse.']],
-   ['🔎','Ricerca e filtri',['Cerca per nome, numero del set o tema: i risultati si aggiornano mentre scrivi.','Filtra per anno di ritiro, per stato (In uscita, Ritirati, Tutti) e per tema.','I filtri si combinano, e la riga sopra l’elenco indica quanti set corrispondono e il loro valore di listino totale.']],
-   ['↕️','Ordinamento',['“Data di ritiro” raggruppa i set per scadenza, dalla più vicina.','Puoi ordinare anche per prezzo, numero di pezzi, uscita più recente, nome o numero del set.','I gruppi intitolati “Nel 2027” contengono set di cui si conosce l’anno ma non ancora il giorno esatto.']],
-   ['⭐','Preferiti',['Tocca la stella su una scheda per salvare il set.','“★ Preferiti” mostra solo i set salvati: una lista della spesa prima che spariscano.','I preferiti restano memorizzati solo su questo dispositivo.']],
+   ['🔍','Dettaglio del set',['Tocca una scheda per aprire il dettaglio: immagine grande, prezzi nelle tre valute e prezzo al pezzo.','La barra della vita mostra a che punto è il set tra l’uscita e il ritiro.','“Aggiungi al calendario” salva il giorno del ritiro con un promemoria due settimane prima.']],
+   ['🔎','Ricerca e filtri',['Cerca per nome, numero del set o tema: i risultati si aggiornano mentre scrivi.','Filtra per anno di ritiro, per stato (In uscita, Ritirati, Tutti) e per tema.','I filtri veloci aggiungono scorciatoie a un tocco (prossima scadenza, entro 60 giorni, prezzo basso, set grandi, usciti quest’anno) e un cursore per il prezzo massimo.','I filtri si combinano, e la riga sopra l’elenco indica quanti set corrispondono e il loro valore di listino totale.']],
+   ['📅','Linea del tempo e ordinamento',['La linea del tempo mostra ogni scadenza con il numero di set in uscita: toccane una per raggiungerla.','“Data di ritiro” raggruppa i set per scadenza, dalla più vicina. Puoi ordinare anche per prezzo, numero di pezzi, uscita più recente, nome o numero del set.','I gruppi intitolati “Nel 2027” contengono set di cui si conosce l’anno ma non ancora il giorno esatto.']],
+   ['⭐','Preferiti',['Tocca la stella su una scheda per salvare il set.','“★ Preferiti” apre la tua lista, dalla scadenza più urgente, con il totale da spendere.','Da lì puoi copiare o condividere la lista, oppure mostrare solo quei set nell’elenco principale.','I preferiti restano memorizzati solo su questo dispositivo.']],
+   ['⇄','Confronto',['Tocca ⇄ su un massimo di tre schede, poi “Confronta” nella barra in basso.','I set compaiono affiancati; il miglior prezzo al pezzo è evidenziato.']],
    ['🌍','Valuta, lingua e aspetto',['Cambia i prezzi tra €, £ e $.','Usa il pulsante ☾ / ☀ per passare dall’aspetto scuro a quello chiaro.','Cambia l’interfaccia tra inglese (EN) e italiano (IT). Le scelte vengono ricordate.']],
    ['🔄','Dati e aggiornamenti',['L’elenco viene tenuto aggiornato dietro le quinte: non devi fare nulla.','In fondo alla pagina trovi la data della lista in uso.','Le date sono previsioni non ufficiali e possono cambiare: prima di acquistare verifica su LEGO.com con il link presente su ogni scheda.']]
   ]}
 };
-var L, fmtLong, fmtMon, fmtDay, fmtNum;
+var L, fmtLong, fmtMed, fmtMon, fmtDay, fmtNum;
 function t(k){var s=L[k]; for(var i=1;i<arguments.length;i++) s=s.replace('{'+(i-1)+'}',arguments[i]); return s;}
 
 /* ---------- raw data ---------- */
@@ -337,16 +496,21 @@ function build(raw){
 /* ---------- state ---------- */
 var raw=validRaw(window.EOL_DATA)? window.EOL_DATA : {rows:[],updated:'',fetched:''};
 var sets=build(raw);
-var favs=new Set(lsGet(LS_FAV)||[]);
+var byN=new Map(sets.map(function(s){return [s.n,s];}));
+var favs=new Set((lsGet(LS_FAV)||[]).filter(function(n){return byN.has(n);}));
 var pref=Object.assign({mode:'auto',lang:'en',cur:'eur',year:'all',state:'live',theme:'',sort:'date',fav:false},lsGet(LS_PREF)||{});
 if(!I18N[pref.lang]) pref.lang='en';
 var q='';
+var quick={next:false,soon:false,under:false,big:false,fresh:false}, maxP=null;   // one-tap filters (not remembered)
+var cmp=[];                                                                       // sets picked for comparison (max 3)
+var curDetail=null, nextDate=null, headDone=false;
 var today=new Date(); today.setHours(0,0,0,0);
 var todayIso=today.getFullYear()+'-'+pad(today.getMonth()+1)+'-'+pad(today.getDate());
 var CUR={eur:['EUR','€'],gbp:['GBP','£'],usd:['USD','$']};
 function d(iso){var p=iso.split('-');return new Date(+p[0],+p[1]-1,+p[2]);}
 function daysTo(iso){return Math.round((d(iso)-today)/864e5);}
-function money(v,cur){return new Intl.NumberFormat(L.locale,{style:'currency',currency:CUR[cur][0]}).format(v);}
+function money(v,cur){return new Intl.NumberFormat(L.locale,{style:'currency',currency:CUR[cur||pref.cur][0]}).format(v);}
+function money0(v){return new Intl.NumberFormat(L.locale,{style:'currency',currency:CUR[pref.cur][0],maximumFractionDigits:0}).format(v);}
 function priceOf(s){return s.price[pref.cur];}
 function human(n){
   if(n<0) return t('retired');
@@ -355,8 +519,19 @@ function human(n){
   if(n<730) return t('inMonths',Math.round(n/30.44));
   return t('inYears',new Intl.NumberFormat(L.locale,{maximumFractionDigits:1}).format(n/365.25));
 }
+function urgency(n){return n<0?'':(n<60?' soon':(n<200?' mid':''));}
 function endLabel(s){return s.date? fmtLong.format(d(s.date)) : t('by',s.year);}
+function span(days){
+  var m=Math.round(days/30.44), y=Math.floor(m/12), r=m%12, out=[];
+  if(y) out.push(y===1? t('y1') : t('yN',y));
+  if(r) out.push(r===1? t('m1') : t('mN',r));
+  return out.length? out.join(' ') : t('lt1');
+}
 function savePref(){lsSet(LS_PREF,pref);}
+function imgTag(s){
+  return /^\d+$/.test(s.n)? '<img loading="lazy" decoding="async" alt="" src="https://images.brickset.com/sets/images/'+s.n+'-1.jpg" onerror="if(this.dataset.f){this.remove()}else{this.dataset.f=1;this.src=this.src.replace(\'/images/\',\'/small/\')}">' : '';
+}
+function picBox(s){return '<div class="pic"><i>'+esc(s.n)+'</i>'+imgTag(s)+'</div>';}
 
 /* ---------- controls ---------- */
 function seg(el,opts,key,after){
@@ -371,7 +546,7 @@ function setupControls(){
   if(pref.year!=='all' && years.indexOf(+pref.year)<0) pref.year='all';
   seg($('segYear'),[['all',t('all')]].concat(years.map(function(y){return [y,String(y)];})),'year');
   seg($('segState'),[['live',t('live')],['gone',t('gone')],['all',t('all')]],'state');
-  seg($('segCur'),[['eur','€'],['gbp','£'],['usd','$']],'cur');
+  seg($('segCur'),[['eur','€'],['gbp','£'],['usd','$']],'cur',function(){renderChips(); render();});
   seg($('segLang'),[['en','EN'],['it','IT']],'lang',applyLang);
   var counts={}; sets.forEach(function(s){counts[s.theme]=(counts[s.theme]||0)+1;});
   var themes=Object.keys(counts).sort(function(a,b){return a.localeCompare(b,L.locale,{sensitivity:'base'});});
@@ -379,7 +554,16 @@ function setupControls(){
   $('theme').innerHTML='<option value="">'+esc(t('allThemes'))+'</option>'+themes.map(function(x){
     return '<option value="'+esc(x)+'">'+esc(x)+' ('+counts[x]+')</option>';}).join('');
   $('theme').value=pref.theme; $('sort').value=pref.sort;
-  $('favBtn').setAttribute('aria-pressed',!!pref.fav);
+  favLabel();
+}
+function favLabel(){$('favBtn').textContent=t('favs')+(favs.size?' · '+favs.size:''); $('favBtn').setAttribute('aria-pressed',!!pref.fav);}
+function renderChips(){
+  var any=maxP!=null || Object.keys(quick).some(function(k){return quick[k];});
+  var defs=[['next',t('qNext')],['soon',t('qSoon')],['under',t('qUnder',money0(30))],['big',t('qBig')],['fresh',t('qFresh')]];
+  $('chips').innerHTML=defs.map(function(c){return '<button class="pill sm" data-quick="'+c[0]+'" aria-pressed="'+quick[c[0]]+'">'+esc(c[1])+'</button>';}).join('')+
+    '<label class="range"><input type="range" id="maxP" min="10" max="1000" step="10" value="'+(maxP==null?1000:maxP)+'" aria-label="'+esc(t('maxPrice'))+'">'+
+    '<output id="maxPL">'+esc(maxP==null? t('anyPrice') : t('upTo',money0(maxP)))+'</output></label>'+
+    (any?'<button class="pill sm" data-quick="reset">'+esc(t('reset'))+'</button>':'');
 }
 function renderGuide(){
   $('guideBody').innerHTML=L.guide.map(function(g){
@@ -389,6 +573,7 @@ function renderGuide(){
 function applyLang(){
   L=I18N[pref.lang];
   fmtLong=new Intl.DateTimeFormat(L.locale,{day:'numeric',month:'long',year:'numeric'});
+  fmtMed=new Intl.DateTimeFormat(L.locale,{day:'numeric',month:'short',year:'numeric'});
   fmtMon=new Intl.DateTimeFormat(L.locale,{month:'short',year:'numeric'});
   fmtDay=new Intl.DateTimeFormat(L.locale,{day:'numeric',month:'short'});
   fmtNum=new Intl.NumberFormat(L.locale);
@@ -396,90 +581,242 @@ function applyLang(){
   document.querySelectorAll('[data-t]').forEach(function(e){e.textContent=L[e.dataset.t];});
   document.querySelectorAll('[data-t-ph]').forEach(function(e){e.placeholder=L[e.dataset.tPh];});
   document.querySelectorAll('[data-t-aria]').forEach(function(e){e.setAttribute('aria-label',L[e.dataset.tAria]);});
-  setupControls(); renderGuide(); renderHead(); render();
+  setupControls(); renderChips(); renderGuide(); renderHead(); render(); renderCmpBar();
 }
 
-/* ---------- header ---------- */
+/* ---------- header tiles (tap = shortcut) ---------- */
 function renderHead(){
   var live=sets.filter(function(s){return s.end>=todayIso;});
-  var next=live.filter(function(s){return s.date;}).map(function(s){return s.date;}).sort()[0];
-  var nextN=next? live.filter(function(s){return s.date===next;}).length : 0;
+  nextDate=live.filter(function(s){return s.date;}).map(function(s){return s.date;}).sort()[0]||null;
+  var nextN=nextDate? live.filter(function(s){return s.date===nextDate;}).length : 0;
   var themes=new Set(sets.map(function(s){return s.theme;})).size;
-  var h='<div class="stat glass blur"><b>'+fmtNum.format(live.length)+'</b><span>'+esc(t('statLive',themes))+'</span></div>';
-  if(next){var n=daysTo(next);
-    h+='<div class="stat glass blur'+(n<60?' hot':'')+'"><b>'+esc(n===0?t('today'):t('days',n))+'</b><span>'+esc(t('statNext',fmtLong.format(d(next))))+'</span></div>'+
-       '<div class="stat glass blur"><b>'+fmtNum.format(nextN)+'</b><span>'+esc(t('statThatDay'))+'</span></div>';}
+  var h='<button class="stat glass blur" data-act="all"><b data-c="'+live.length+'">'+fmtNum.format(live.length)+'</b><span>'+esc(t('statLive',themes))+'</span></button>';
+  if(nextDate){var n=daysTo(nextDate);
+    h+='<button class="stat glass blur'+(n<60?' hot':'')+'" data-act="next"><b'+(n>0?' data-c="'+n+'" data-f="'+esc(t('days','#'))+'"':'')+'>'+esc(n===0?t('today'):t('days',n))+'</b><span>'+esc(t('statNext',fmtLong.format(d(nextDate))))+'</span></button>'+
+       '<button class="stat glass blur" data-act="next"><b data-c="'+nextN+'">'+fmtNum.format(nextN)+'</b><span>'+esc(t('statThatDay'))+'</span></button>';}
   var upd=parseDate(raw.updated);
   h+='<div class="stat glass blur"><b>'+esc(upd? fmtDay.format(d(upd)) : '—')+'</b><span>'+esc(t('statUpdated'))+'</span></div>';
   $('stats').innerHTML=h;
   $('foot').textContent=[raw.updated? t('listOf',upd?fmtLong.format(d(upd)):raw.updated):null,
     raw.fetched? t('imported',fmtLong.format(d(raw.fetched))):null].filter(Boolean).join(' · ');
+  if(!headDone && !CALM){                         // numbers count up once, on first load
+    $('stats').querySelectorAll('[data-c]').forEach(function(b){
+      var end=+b.dataset.c, f=b.dataset.f||'#', t0=null;
+      (function step(ts){ if(t0==null) t0=ts; var k=Math.min(1,(ts-t0)/800), v=Math.round(end*(1-Math.pow(1-k,3)));
+        b.textContent=f.replace('#',fmtNum.format(v)); if(k<1) requestAnimationFrame(step); })(performance.now());
+    });
+  }
+  headDone=true;
+}
+function resetAll(){
+  pref.year='all'; pref.state='live'; pref.theme=''; pref.fav=false; q=''; $('q').value='';
+  Object.keys(quick).forEach(function(k){quick[k]=false;}); maxP=null; savePref();
 }
 
 /* ---------- list ---------- */
 var STAR='<svg viewBox="0 0 20 20" fill="currentColor"><path d="M10 1.6l2.5 5.3 5.8.7-4.3 4 1.1 5.8L10 14.6l-5.1 2.8L6 11.6l-4.3-4 5.8-.7z"/></svg>';
 function card(s){
-  var n=daysTo(s.end), p=priceOf(s), cls=n<0?'':(n<60?' soon':(n<200?' mid':''));
-  var img=/^\d+$/.test(s.n)? '<img loading="lazy" decoding="async" alt="" src="https://images.brickset.com/sets/images/'+s.n+'-1.jpg" onerror="if(this.dataset.f){this.remove()}else{this.dataset.f=1;this.src=this.src.replace(\'/images/\',\'/small/\')}">' : '';
+  var n=daysTo(s.end), p=priceOf(s);
   var meta=[s.pcs? t('pieces',fmtNum.format(s.pcs)):null, s.rel? t('since',fmtMon.format(d(s.rel))):null].filter(Boolean).join(' · ');
   var alt=s.alt.length? t('also',s.alt.map(function(a){return a.date?fmtLong.format(d(a.date)):String(a.year);}).join(', ')) : '';
-  return '<article class="card glass'+(n<0?' gone':'')+'">'+
+  return '<article class="card glass rv'+(n<0?' gone':'')+'" data-n="'+esc(s.n)+'" tabindex="0">'+
+    '<button class="cmpb" data-cmp="'+esc(s.n)+'" aria-pressed="'+(cmp.indexOf(s.n)>=0)+'" aria-label="'+esc(t('cmpAria'))+'">⇄</button>'+
     '<button class="star" data-fav="'+esc(s.n)+'" aria-pressed="'+favs.has(s.n)+'" aria-label="'+esc(t('fav'))+'">'+STAR+'</button>'+
-    '<div class="pic"><i>'+esc(s.n)+'</i>'+img+'</div>'+
+    picBox(s)+
     '<div class="body"><div class="meta">'+esc(s.n)+' · '+esc(s.theme)+'</div>'+
     '<div class="name" title="'+esc(s.name)+'">'+esc(s.name)+'</div>'+
     '<div class="meta">'+esc(meta)+'</div>'+
     '<div class="note" title="'+esc(alt)+'">'+esc(alt)+'</div>'+
-    '<div class="foot"><div class="price">'+(p!=null? esc(money(p,pref.cur))+(s.price.unit?' <small>'+esc(t('perBag'))+'</small>':'') : '<small>'+esc(t('noPrice',CUR[pref.cur][1]))+'</small>')+'</div>'+
-    '<span class="badge'+cls+'" title="'+esc(endLabel(s))+'">'+esc(human(n))+'</span></div>'+
+    '<div class="foot"><div class="price">'+(p!=null? esc(money(p))+(s.price.unit?' <small>'+esc(t('perBag'))+'</small>':'') : '<small>'+esc(t('noPrice',CUR[pref.cur][1]))+'</small>')+'</div>'+
+    '<span class="badge'+urgency(n)+'" title="'+esc(endLabel(s))+'">'+esc(human(n))+'</span></div>'+
     '<div class="links"><a href="https://www.lego.com/'+L.lego+'/search?q='+encodeURIComponent(s.n)+'" target="_blank" rel="noopener">'+esc(t('find'))+'</a></div>'+
     '</div></article>';
 }
 function filtered(){
-  var words=q.toLowerCase().split(/\s+/).filter(Boolean);
+  var words=q.toLowerCase().split(/\s+/).filter(Boolean), thisYear=String(today.getFullYear());
   return sets.filter(function(s){
     if(pref.year!=='all' && s.year!==+pref.year) return false;
     if(pref.state==='live' && s.end<todayIso) return false;
     if(pref.state==='gone' && s.end>=todayIso) return false;
     if(pref.theme && s.theme!==pref.theme) return false;
     if(pref.fav && !favs.has(s.n)) return false;
+    var p=priceOf(s);
+    if(quick.next && s.date!==nextDate) return false;
+    if(quick.soon){var n=daysTo(s.end); if(n<0||n>60) return false;}
+    if(quick.under && !(p!=null && p<30)) return false;
+    if(quick.big && !(s.pcs>=2000)) return false;
+    if(quick.fresh && !(s.rel && s.rel.slice(0,4)===thisYear)) return false;
+    if(maxP!=null && !(p!=null && p<=maxP)) return false;
     if(words.length){var hay=(s.n+' '+s.name+' '+s.theme).toLowerCase();
       for(var i=0;i<words.length;i++) if(hay.indexOf(words[i])<0) return false;}
     return true;});
 }
 function byName(a,b){return a.name.localeCompare(b.name,L.locale);}
+function byEnd(a,b){return a.end<b.end?-1:a.end>b.end?1:(!!b.date-!!a.date)||byName(a,b);}
+function gkey(s){return s.date||('y'+s.year);}
 function nSets(n){return n===1? t('oneSet') : t('sets',fmtNum.format(n));}
+var io=null;
+function reveal(){                                // cards fade in as they scroll into view
+  if(io) io.disconnect();
+  var cards=$('list').querySelectorAll('.card');
+  if(CALM || !('IntersectionObserver' in window)){cards.forEach(function(c){c.classList.remove('rv');}); return;}
+  var first=true;
+  io=new IntersectionObserver(function(es){
+    es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); if(first) e.target.classList.add('now'); io.unobserve(e.target);} });
+    first=false;
+  },{rootMargin:'0px 0px -6% 0px'});
+  cards.forEach(function(c){io.observe(c);});
+}
+function renderTimeline(list){
+  var groups=new Map();
+  list.slice().sort(byEnd).forEach(function(s){var k=gkey(s); if(!groups.has(k)) groups.set(k,{s:s,c:0}); groups.get(k).c++;});
+  if(groups.size<2){$('tl').innerHTML=''; return;}
+  var max=0; groups.forEach(function(g){max=Math.max(max,g.c);});
+  var h=''; groups.forEach(function(g,k){
+    var n=daysTo(g.s.end);
+    h+='<button class="tl-n'+urgency(n)+'" data-g="'+esc(k)+'" title="'+esc(g.s.date? human(n) : t('tbc'))+'"><span class="tl-col"><span class="tl-bar" style="height:'+Math.max(5,Math.round(50*g.c/max))+'px"></span></span>'+
+      '<span class="tl-dot"></span><b>'+esc(g.s.date? fmtMed.format(d(g.s.date)) : t('inYear',g.s.year))+'</b><small>'+esc(nSets(g.c))+'</small></button>';});
+  $('tl').innerHTML=h;
+}
 function render(){
   var list=filtered(), html='';
   var tot=0, has=0; list.forEach(function(s){var p=priceOf(s); if(p!=null && !s.price.unit){tot+=p;has++;}});
-  $('count').textContent=list.length? nSets(list.length)+(has?' · '+t('listValue',money(tot,pref.cur)):'') : '';
+  $('count').textContent=list.length? nSets(list.length)+(has?' · '+t('listValue',money(tot)):'') : '';
+  renderTimeline(list);
   if(!list.length){
     html='<div class="empty"><b>'+esc(t('none'))+'</b>'+esc(sets.length?t('noneHint'):t('noData'))+'</div>';
   } else if(pref.sort==='date'){
     var groups=new Map();
-    list.slice().sort(function(a,b){return a.end<b.end?-1:a.end>b.end?1:(!!b.date-!!a.date)||byName(a,b);}).forEach(function(s){
-      var k=s.date||('y'+s.year); if(!groups.has(k)) groups.set(k,[]); groups.get(k).push(s);});
-    groups.forEach(function(arr){
+    list.slice().sort(byEnd).forEach(function(s){var k=gkey(s); if(!groups.has(k)) groups.set(k,[]); groups.get(k).push(s);});
+    groups.forEach(function(arr,k){
       var s=arr[0], n=daysTo(s.end);
-      html+='<section class="group"><div class="ghead"><h2>'+esc(s.date? fmtLong.format(d(s.date)) : t('inYear',s.year))+'</h2><span>'+
+      html+='<section class="group" id="g-'+esc(k)+'"><div class="ghead"><h2>'+esc(s.date? fmtLong.format(d(s.date)) : t('inYear',s.year))+'</h2><span>'+
         esc(s.date? human(n) : t('tbc'))+' · '+esc(nSets(arr.length))+'</span></div><div class="grid">'+arr.map(card).join('')+'</div></section>';});
   } else {
-    var cmp={priceDesc:function(a,b){return (priceOf(b)||0)-(priceOf(a)||0);},
+    var cmpf={priceDesc:function(a,b){return (priceOf(b)||0)-(priceOf(a)||0);},
       priceAsc:function(a,b){return (priceOf(a)==null?1e9:priceOf(a))-(priceOf(b)==null?1e9:priceOf(b));},
       pcs:function(a,b){return (b.pcs||0)-(a.pcs||0);},
       rel:function(a,b){return (b.rel||'')<(a.rel||'')?-1:(b.rel||'')>(a.rel||'')?1:0;},
       name:byName,
       num:function(a,b){return a.n.localeCompare(b.n,L.locale,{numeric:true});}}[pref.sort];
-    html='<section class="group"><div class="grid">'+list.slice().sort(function(a,b){return cmp(a,b)||byName(a,b);}).map(card).join('')+'</div></section>';
+    html='<section class="group"><div class="grid">'+list.slice().sort(function(a,b){return cmpf(a,b)||byName(a,b);}).map(card).join('')+'</div></section>';
   }
   $('list').innerHTML=html;
+  reveal();
 }
 
-/* ---------- start ---------- */
-$('q').addEventListener('input',function(){q=this.value; render();});
-$('theme').onchange=function(){pref.theme=this.value; savePref(); render();};
-$('sort').onchange=function(){pref.sort=this.value; savePref(); render();};
-$('favBtn').onclick=function(){pref.fav=!pref.fav; savePref(); this.setAttribute('aria-pressed',pref.fav); render();};
+/* ---------- set detail ---------- */
+function ppp(s){var p=priceOf(s); return (p!=null && s.pcs && !s.price.unit)? p/s.pcs : null;}
+function openDetail(n){
+  var s=byN.get(n); if(!s) return;
+  curDetail=n;
+  var left=daysTo(s.end), p=priceOf(s), pp=ppp(s), life='';
+  if(s.rel && s.rel<s.end){
+    var total=(d(s.end)-d(s.rel))/864e5, gone=Math.max(0,Math.min(total,(today-d(s.rel))/864e5)), pct=Math.round(100*gone/total);
+    life='<div class="life"><div class="track"><div class="fill" data-w="'+pct+'"></div><div class="now" data-w="'+pct+'"></div></div>'+
+      '<div class="ends"><span>'+esc(t('released'))+' · '+esc(fmtMed.format(d(s.rel)))+'</span><span>'+esc(t('retires'))+' · '+esc(s.date? fmtMed.format(d(s.date)) : String(s.year))+'</span></div>'+
+      '<p>'+esc(t('life',pct))+'</p></div>';
+  }
+  var facts=[[t('piecesL'), s.pcs? fmtNum.format(s.pcs) : '—'],[t('pricePer'), pp!=null? money(pp) : '—'],
+    [t('released'), s.rel? fmtLong.format(d(s.rel)) : '—'],
+    [t('onShelves'), s.rel? span(Math.max(0,(Math.min(today,d(s.end))-d(s.rel))/864e5)) : '—'],
+    [t('retires'), endLabel(s)]];
+  var alt=s.alt.length? '<div class="note" style="height:auto;white-space:normal;margin-top:10px">'+esc(t('also',s.alt.map(function(a){return a.date?fmtLong.format(d(a.date)):String(a.year);}).join(', ')))+'</div>' : '';
+  $('detailBody').innerHTML='<button class="x" data-close aria-label="'+esc(t('close'))+'">✕</button><div class="dt">'+picBox(s)+
+    '<div><div class="meta">'+esc(s.n)+' · '+esc(s.theme)+'</div><h3>'+esc(s.name)+'</h3>'+
+    '<span class="badge'+urgency(left)+'">'+esc(human(left))+'</span>'+
+    '<div class="prices">'+['eur','gbp','usd'].map(function(c){var v=s.price[c];
+      return '<div class="'+(c===pref.cur?'on':'')+'">'+CUR[c][0]+'<b>'+(v!=null? esc(money(v,c)) : '—')+'</b></div>';}).join('')+'</div>'+
+    '<dl class="facts">'+facts.map(function(f){return '<dt>'+esc(f[0])+'</dt><dd>'+esc(f[1])+'</dd>';}).join('')+'</dl>'+alt+life+'</div></div>'+
+    '<div class="actions">'+
+    '<button class="pill" data-fav="'+esc(s.n)+'" aria-pressed="'+favs.has(s.n)+'">'+esc(favs.has(s.n)?t('remFav'):t('addFav'))+'</button>'+
+    '<button class="pill" data-cmp="'+esc(s.n)+'" aria-pressed="'+(cmp.indexOf(s.n)>=0)+'">'+esc(cmp.indexOf(s.n)>=0?t('remCmp'):t('addCmp'))+'</button>'+
+    (left>=0?'<button class="pill" data-cal="'+esc(s.n)+'">'+esc(t('cal'))+'</button>':'')+
+    '<a class="pill tint" href="https://www.lego.com/'+L.lego+'/search?q='+encodeURIComponent(s.n)+'" target="_blank" rel="noopener">'+esc(t('lego'))+'</a></div>';
+  var dlg=$('detail');
+  if(!dlg.open){ ['favs','cmp'].forEach(function(x){if($(x).open) $(x).close();}); dlg.showModal(); }
+  $('detailBody').scrollTop=0;
+  requestAnimationFrame(function(){requestAnimationFrame(function(){
+    $('detailBody').querySelectorAll('[data-w]').forEach(function(e){ if(e.className==='fill') e.style.width=e.dataset.w+'%'; else e.style.left=e.dataset.w+'%'; });
+  });});
+}
+function calendar(n){                              // .ics file: retirement day, reminder two weeks before
+  var s=byN.get(n); if(!s) return;
+  var day=s.end.replace(/-/g,''), nx=new Date(d(s.end).getTime()+864e5), end=nx.getFullYear()+pad(nx.getMonth()+1)+pad(nx.getDate());
+  var sum=t('calSum',s.n,s.name).replace(/([,;\\])/g,'\\$1');
+  var ics=['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//LEGO EOL//EN','BEGIN:VEVENT','UID:'+s.n+'-'+day+'@lego-eol',
+    'DTSTAMP:'+todayIso.replace(/-/g,'')+'T000000Z','DTSTART;VALUE=DATE:'+day,'DTEND;VALUE=DATE:'+end,'SUMMARY:'+sum,
+    'URL:https://www.lego.com/'+L.lego+'/search?q='+encodeURIComponent(s.n),
+    'BEGIN:VALARM','ACTION:DISPLAY','DESCRIPTION:'+sum,'TRIGGER:-P14D','END:VALARM','END:VEVENT','END:VCALENDAR'].join('\r\n');
+  var a=document.createElement('a'); a.href=URL.createObjectURL(new Blob([ics],{type:'text/calendar'})); a.download='lego-'+s.n+'.ics';
+  document.body.appendChild(a); a.click(); a.remove(); setTimeout(function(){URL.revokeObjectURL(a.href);},2000);
+}
+
+/* ---------- favourites ---------- */
+function favList(){return Array.from(favs).map(function(n){return byN.get(n);}).filter(Boolean).sort(byEnd);}
+function favText(){
+  return favList().map(function(s){var p=priceOf(s);
+    return s.n+' '+s.name+(p!=null?' — '+money(p):'')+' — '+t('retiresOn',endLabel(s));}).join('\n');
+}
+function renderFavs(){
+  var list=favList(), tot=0;
+  if(!list.length){ $('favBody').innerHTML='<p class="lead" style="margin-top:10px">'+esc(t('favEmpty'))+'</p>'; return; }
+  var rows=list.map(function(s){var p=priceOf(s), n=daysTo(s.end); if(p!=null && !s.price.unit) tot+=p;
+    return '<div class="frow" data-open="'+esc(s.n)+'">'+picBox(s)+'<div><b>'+esc(s.name)+'</b><small>'+esc(s.n)+' · '+esc(endLabel(s))+'</small> <span class="badge'+urgency(n)+'">'+esc(human(n))+'</span></div>'+
+      '<div class="p">'+(p!=null? esc(money(p)) : '—')+'</div><button class="rm" data-fav="'+esc(s.n)+'" aria-label="'+esc(t('remove'))+'">✕</button></div>';}).join('');
+  $('favBody').innerHTML='<p class="lead">'+esc(nSets(list.length))+'</p>'+rows+
+    '<div class="ftot"><span>'+esc(t('total'))+'</span><b>'+esc(money(tot))+'</b></div>'+
+    '<div class="actions"><button class="pill" id="onlyFavs" aria-pressed="'+!!pref.fav+'">'+esc(t('onlyFavs'))+'</button>'+
+    '<button class="pill" id="copyFavs">'+esc(t('copy'))+'</button>'+
+    (navigator.share?'<button class="pill tint" id="shareFavs">'+esc(t('share'))+'</button>':'')+'</div>';
+}
+function toggleFav(n){
+  if(favs.has(n)) favs.delete(n); else favs.add(n);
+  lsSet(LS_FAV,Array.from(favs)); favLabel();
+  document.querySelectorAll('#list [data-fav="'+n+'"]').forEach(function(b){b.setAttribute('aria-pressed',favs.has(n)); b.classList.remove('pop'); void b.offsetWidth; b.classList.add('pop');});
+  if($('favs').open) renderFavs();
+  if($('detail').open && curDetail===n) openDetail(n);
+  if(pref.fav) render();
+}
+
+/* ---------- comparison ---------- */
+function toggleCmp(n){
+  var i=cmp.indexOf(n);
+  if(i>=0) cmp.splice(i,1); else { cmp.push(n); if(cmp.length>3){ var out=cmp.shift(); markCmp(out); } }
+  markCmp(n); renderCmpBar();
+  if($('cmp').open){ if(cmp.length>=2) renderCmp(); else $('cmp').close(); }
+  if($('detail').open && curDetail===n) openDetail(n);
+}
+function markCmp(n){
+  document.querySelectorAll('#list [data-cmp="'+n+'"]').forEach(function(b){b.setAttribute('aria-pressed',cmp.indexOf(n)>=0); b.classList.remove('pop'); void b.offsetWidth; b.classList.add('pop');});
+}
+function renderCmpBar(){
+  var bar=$('cmpBar');
+  if(!cmp.length){bar.hidden=true; return;}
+  bar.hidden=false;
+  bar.innerHTML='<span class="th">'+cmp.map(function(n){return '<span style="background-image:url(https://images.brickset.com/sets/small/'+encodeURIComponent(n)+'-1.jpg)"></span>';}).join('')+'</span>'+
+    '<span>'+esc(t('cmpSel',cmp.length))+'</span>'+
+    '<button class="pill sm" id="cmpClear">'+esc(t('clear'))+'</button>'+
+    '<button class="pill sm tint" id="cmpGo"'+(cmp.length<2?' disabled title="'+esc(t('cmpHint'))+'"':'')+'>'+esc(t('cmpGo'))+'</button>';
+}
+function renderCmp(){
+  var list=cmp.map(function(n){return byN.get(n);}).filter(Boolean);
+  var pps=list.map(ppp), best=Math.min.apply(null,pps.filter(function(v){return v!=null;}));
+  var rows=[[t('themeL'),function(s){return esc(s.theme);}],
+    [t('priceL'),function(s){var p=priceOf(s); return p!=null? esc(money(p)) : '—';}],
+    [t('piecesL'),function(s){return s.pcs? fmtNum.format(s.pcs) : '—';}],
+    [t('pricePer'),function(s,i){var v=pps[i]; return v==null? '—' : (v===best && list.length>1? '<span class="best">'+esc(money(v))+'<small>'+esc(t('best'))+'</small></span>' : esc(money(v)));}],
+    [t('released'),function(s){return s.rel? esc(fmtMed.format(d(s.rel))) : '—';}],
+    [t('retires'),function(s){return esc(endLabel(s));}],
+    [t('countdown'),function(s){var n=daysTo(s.end); return '<span class="badge'+urgency(n)+'">'+esc(human(n))+'</span>';}]];
+  var h='<div class="ct" style="grid-template-columns:auto repeat('+list.length+',minmax(150px,1fr))"><div class="l h"></div>'+
+    list.map(function(s){return '<div class="h"><div class="pic" data-open="'+esc(s.n)+'"><i>'+esc(s.n)+'</i>'+imgTag(s)+'</div><b>'+esc(s.name)+'</b><small class="l">'+esc(s.n)+'</small></div>';}).join('');
+  rows.forEach(function(r){h+='<div class="l">'+esc(r[0])+'</div>'+list.map(function(s,i){return '<div class="v">'+r[1](s,i)+'</div>';}).join('');});
+  h+='<div class="l"></div>'+list.map(function(s){return '<div><button class="pill sm" data-cmp="'+esc(s.n)+'">'+esc(t('remove'))+'</button></div>';}).join('')+'</div>';
+  $('cmpBody').innerHTML=h;
+}
+
+/* ---------- appearance ---------- */
 function isDark(){return pref.mode==='dark' || (pref.mode!=='light' && window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches);}
 function applyMode(){
   if(pref.mode==='dark'||pref.mode==='light') document.documentElement.setAttribute('data-mode',pref.mode);
@@ -487,19 +824,71 @@ function applyMode(){
   var dk=isDark(); $('modeBtn').textContent=dk?'☀':'☾'; $('modeBtn').setAttribute('aria-pressed',dk);
   document.querySelectorAll('meta[name="theme-color"]').forEach(function(m){m.removeAttribute('media'); m.content=dk?'#07080c':'#eef1fa';});
 }
+
+/* ---------- events ---------- */
+var raf=0;
+function soon(fn){cancelAnimationFrame(raf); raf=requestAnimationFrame(fn);}
+$('q').addEventListener('input',function(){q=this.value; render();});
+$('theme').onchange=function(){pref.theme=this.value; savePref(); render();};
+$('sort').onchange=function(){pref.sort=this.value; savePref(); render();};
 $('modeBtn').onclick=function(){pref.mode=isDark()?'light':'dark'; savePref(); applyMode();};
 if(window.matchMedia) matchMedia('(prefers-color-scheme: dark)').addEventListener('change',applyMode);
-applyMode();
 $('guideBtn').onclick=function(){$('guide').showModal(); $('guide').querySelector('.sheet').scrollTop=0;};
-$('guideClose').onclick=function(){$('guide').close();};
-$('guide').addEventListener('click',function(e){if(e.target===this) this.close();});
-$('list').addEventListener('click',function(e){
-  var b=e.target.closest('[data-fav]'); if(!b) return;
-  var n=b.dataset.fav; if(favs.has(n)) favs.delete(n); else favs.add(n);
-  lsSet(LS_FAV,Array.from(favs)); b.setAttribute('aria-pressed',favs.has(n));
-  if(pref.fav) render();
+$('favBtn').onclick=function(){renderFavs(); $('favs').showModal();};
+$('chips').addEventListener('input',function(e){
+  if(e.target.id!=='maxP') return;
+  var v=+e.target.value; maxP=v>=1000? null : v;
+  $('maxPL').textContent=maxP==null? t('anyPrice') : t('upTo',money0(maxP));
+  soon(render);
 });
+$('chips').addEventListener('change',function(e){ if(e.target.id==='maxP') renderChips(); });
+$('list').addEventListener('pointermove',function(e){               // glass sheen follows the pointer
+  var c=e.target.closest('.card'); if(!c) return;
+  var r=c.getBoundingClientRect(); c.style.setProperty('--mx',(e.clientX-r.left)+'px'); c.style.setProperty('--my',(e.clientY-r.top)+'px');
+});
+$('list').addEventListener('keydown',function(e){
+  if((e.key==='Enter'||e.key===' ') && e.target.classList.contains('card')){e.preventDefault(); openDetail(e.target.dataset.n);}
+});
+document.addEventListener('click',function(e){
+  var el=e.target, b;
+  if(el.tagName==='DIALOG'){el.close(); return;}                      // tap on the backdrop
+  if(!el.closest) return;
+  if((b=el.closest('[data-close]'))){b.closest('dialog').close(); return;}
+  if((b=el.closest('[data-fav]'))){toggleFav(b.dataset.fav); return;}
+  if((b=el.closest('[data-cmp]'))){toggleCmp(b.dataset.cmp); return;}
+  if((b=el.closest('[data-cal]'))){calendar(b.dataset.cal); return;}
+  if((b=el.closest('[data-quick]'))){
+    var k=b.dataset.quick;
+    if(k==='reset'){Object.keys(quick).forEach(function(x){quick[x]=false;}); maxP=null;} else quick[k]=!quick[k];
+    renderChips(); render(); return;
+  }
+  if((b=el.closest('[data-act]'))){
+    resetAll(); if(b.dataset.act==='next') quick.next=true;
+    setupControls(); renderChips(); render();
+    $('count').scrollIntoView({behavior:CALM?'auto':'smooth',block:'start'}); return;
+  }
+  if((b=el.closest('[data-g]'))){
+    if(pref.sort!=='date'){pref.sort='date'; savePref(); $('sort').value='date'; render();}
+    var g=$('g-'+b.dataset.g); if(g) g.scrollIntoView({behavior:CALM?'auto':'smooth',block:'start'}); return;
+  }
+  if(el.id==='cmpClear'){var old=cmp.slice(); cmp=[]; old.forEach(markCmp); renderCmpBar(); return;}
+  if(el.id==='cmpGo'){ if(cmp.length>=2){renderCmp(); $('cmp').showModal();} return; }
+  if(el.id==='onlyFavs'){pref.fav=!pref.fav; savePref(); favLabel(); el.setAttribute('aria-pressed',pref.fav); render(); return;}
+  if(el.id==='copyFavs'){
+    var txt=favText(), done=function(){el.textContent=t('copied'); setTimeout(function(){el.textContent=t('copy');},1600);};
+    if(navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(txt).then(done,function(){});
+    return;
+  }
+  if(el.id==='shareFavs'){navigator.share({title:L.title,text:favText()}).catch(function(){}); return;}
+  if((b=el.closest('[data-open]'))){openDetail(b.dataset.open); return;}
+  if(el.closest('a,button,input,select,label')) return;
+  if((b=el.closest('.card'))) openDetail(b.dataset.n);
+});
+function barHeight(){document.documentElement.style.setProperty('--barh',Math.round(document.querySelector('.bar').offsetHeight)+'px');}
+if('ResizeObserver' in window) new ResizeObserver(barHeight).observe(document.querySelector('.bar'));
+applyMode();
 applyLang();
+barHeight();
 }
 /* The list lives in data.js, regenerated separately: the app silently picks up the latest copy on every visit. */
 (function(){var s=document.createElement('script'); s.src='data.js?v='+Math.floor(Date.now()/36e5);
