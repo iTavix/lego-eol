@@ -414,7 +414,7 @@ var CALM=window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').mat
 
 /* ---------- translations: English is the default, Italian is optional ---------- */
 var I18N={
- en:{locale:'en-US', lego:'en-us', title:'LEGO EOL · Retiring sets',
+ en:{locale:'en-US', title:'LEGO EOL · Retiring sets',
   h1:'Retiring LEGO sets.',
   sub:'Every LEGO set leaving production this year and beyond, with expected date, price and countdown.',
   search:'Search by name or number', currency:'Currency', year:'Retirement year', status:'Status', theme:'Theme', sort:'Sort by',
@@ -425,7 +425,7 @@ var I18N={
   retired:'Retired', lastDay:'Last day', inDays:'in {0} days', inMonths:'in {0} months', inYears:'in {0} years',
   by:'By end of {0}', inYear:'In {0}', tbc:'exact date to be confirmed', sets:'{0} sets', oneSet:'1 set', listValue:'list value {0}',
   pieces:'{0} pieces', since:'since {0}', also:'Source also lists: {0}', perBag:'per bag', noPrice:'price n/a in {0}',
-  find:'Find on LEGO.com ↗', none:'No sets found', noneHint:'Try changing filters or search.', noData:'Data temporarily unavailable.',
+  find:'View on LEGO.com ↗', none:'No sets found', noneHint:'Try changing filters or search.', noData:'Data temporarily unavailable.',
   listOf:'List dated {0}', imported:'refreshed {0}',
   disclaimer:'Retirement dates are unofficial forecasts and may change. Not affiliated with or sponsored by the LEGO Group. Images: Brickset.',
   dark:'Dark mode', close:'Close', timeline:'Timeline',
@@ -434,7 +434,7 @@ var I18N={
   piecesL:'Pieces', pricePer:'Price per piece', released:'Released', onShelves:'On shelves for', retires:'Retires', themeL:'Theme', priceL:'Price', countdown:'Countdown',
   life:'{0}% of its shelf life gone', y1:'1 year', yN:'{0} years', m1:'1 month', mN:'{0} months', lt1:'less than a month',
   addFav:'☆ Add to favorites', remFav:'★ In favorites', addCmp:'⇄ Compare', remCmp:'⇄ In comparison', cmpAria:'Compare',
-  cal:'Add to calendar', calSum:'LEGO {0} {1} retires', lego:'LEGO.com ↗',
+  cal:'Add to calendar', calSum:'LEGO {0} {1} retires', shop:'LEGO.com ↗',
   favTitle:'Your favorites', favEmpty:'No favorites yet. Tap the star on a set to save it here.', total:'Total',
   onlyFavs:'Show only these in the list', copy:'Copy list', copied:'Copied ✓', share:'Share', remove:'Remove', retiresOn:'retires {0}',
   cmpTitle:'Compare sets', cmpSel:'{0} selected', cmpGo:'Compare', clear:'Clear', cmpHint:'Select at least two sets with the ⇄ button on the cards.', best:'best value',
@@ -451,7 +451,7 @@ var I18N={
    ['look','Currency, language and appearance',['Switch prices between €, £ and $.','Use the ☾ / ☀ button to switch between dark and light appearance.','Switch the interface between English (EN) and Italian (IT). Your choices are remembered.']],
    ['update','Data and updates',['The list is kept up to date behind the scenes: there is nothing to do.','The footer shows the date of the list in use.','Dates are unofficial forecasts and can change: check LEGO.com before buying, using the link on each card.']]
   ]},
- it:{locale:'it-IT', lego:'it-it', title:'LEGO EOL · Set in uscita di produzione',
+ it:{locale:'it-IT', title:'LEGO EOL · Set in uscita di produzione',
   h1:'Set in uscita di produzione.',
   sub:'Tutti i set LEGO in ritiro quest’anno e nei prossimi, con data prevista, prezzo e conto alla rovescia.',
   search:'Cerca per nome o numero', currency:'Valuta', year:'Anno di ritiro', status:'Stato', theme:'Tema', sort:'Ordina per',
@@ -462,7 +462,7 @@ var I18N={
   retired:'Ritirato', lastDay:'Ultimo giorno', inDays:'tra {0} giorni', inMonths:'tra {0} mesi', inYears:'tra {0} anni',
   by:'Entro il {0}', inYear:'Nel {0}', tbc:'data esatta da definire', sets:'{0} set', oneSet:'1 set', listValue:'valore di listino {0}',
   pieces:'{0} pezzi', since:'dal {0}', also:'La fonte indica anche: {0}', perBag:'a bustina', noPrice:'prezzo n.d. in {0}',
-  find:'Cerca su LEGO.com ↗', none:'Nessun set trovato', noneHint:'Prova a cambiare filtri o ricerca.', noData:'Dati momentaneamente non disponibili.',
+  find:'Vedi su LEGO.com ↗', none:'Nessun set trovato', noneHint:'Prova a cambiare filtri o ricerca.', noData:'Dati momentaneamente non disponibili.',
   listOf:'Lista del {0}', imported:'aggiornata in data {0}',
   disclaimer:'Le date di ritiro sono previsioni non ufficiali e possono cambiare. Sito non affiliato né sponsorizzato dal LEGO Group. Immagini: Brickset.',
   dark:'Tema scuro', close:'Chiudi', timeline:'Linea del tempo',
@@ -471,7 +471,7 @@ var I18N={
   piecesL:'Pezzi', pricePer:'Prezzo al pezzo', released:'Uscita', onShelves:'In commercio da', retires:'Ritiro', themeL:'Tema', priceL:'Prezzo', countdown:'Conto alla rovescia',
   life:'{0}% della vita commerciale trascorso', y1:'1 anno', yN:'{0} anni', m1:'1 mese', mN:'{0} mesi', lt1:'meno di un mese',
   addFav:'☆ Aggiungi ai preferiti', remFav:'★ Nei preferiti', addCmp:'⇄ Confronta', remCmp:'⇄ Nel confronto', cmpAria:'Confronta',
-  cal:'Aggiungi al calendario', calSum:'LEGO {0} {1}: ultimo giorno', lego:'LEGO.com ↗',
+  cal:'Aggiungi al calendario', calSum:'LEGO {0} {1}: ultimo giorno', shop:'LEGO.com ↗',
   favTitle:'I tuoi preferiti', favEmpty:'Ancora nessun preferito. Tocca la stella su un set per salvarlo qui.', total:'Totale',
   onlyFavs:'Mostra solo questi nell’elenco', copy:'Copia elenco', copied:'Copiato ✓', share:'Condividi', remove:'Rimuovi', retiresOn:'ritiro {0}',
   cmpTitle:'Confronta i set', cmpSel:'{0} selezionati', cmpGo:'Confronta', clear:'Svuota', cmpHint:'Seleziona almeno due set con il pulsante ⇄ sulle schede.', best:'più conveniente',
@@ -553,6 +553,15 @@ function daysTo(iso){return Math.round((d(iso)-today)/864e5);}
 function money(v,cur){return new Intl.NumberFormat(L.locale,{style:'currency',currency:CUR[cur||pref.cur][0]}).format(v);}
 function money0(v){return new Intl.NumberFormat(L.locale,{style:'currency',currency:CUR[pref.cur][0],maximumFractionDigits:0}).format(v);}
 function priceOf(s){return s.price[pref.cur];}
+/* Direct link to the set's own page on the official shop. The shop follows the chosen currency
+   (£ -> UK, $ -> US, € -> Italy or Ireland by language); a set with no price in that currency
+   is not sold there, so the link goes to a shop where it has one. */
+function shopUrl(s){
+  var c=pref.cur;
+  if(s.price[c]==null) c=['eur','gbp','usd'].filter(function(x){return s.price[x]!=null;})[0]||c;
+  var store=c==='gbp'? 'en-gb' : c==='usd'? 'en-us' : (pref.lang==='it'? 'it-it' : 'en-ie');
+  return 'https://www.lego.com/'+store+'/product/'+encodeURIComponent(s.n);
+}
 function human(n){
   if(n<0) return t('retired');
   if(n===0) return t('lastDay');
@@ -692,7 +701,7 @@ function card(s){
     '<div class="note" title="'+esc(alt)+'">'+esc(alt)+'</div>'+
     '<div class="foot"><div class="price">'+(p!=null? esc(money(p))+(s.price.unit?' <small>'+esc(t('perBag'))+'</small>':'') : '<small>'+esc(t('noPrice',CUR[pref.cur][1]))+'</small>')+'</div>'+
     '<span class="badge'+urgency(n)+'" title="'+esc(endLabel(s))+'">'+esc(human(n))+'</span></div>'+
-    '<div class="links"><a href="https://www.lego.com/'+L.lego+'/search?q='+encodeURIComponent(s.n)+'" target="_blank" rel="noopener">'+esc(t('find'))+'</a></div>'+
+    '<div class="links"><a href="'+esc(shopUrl(s))+'" target="_blank" rel="noopener">'+esc(t('find'))+'</a></div>'+
     '</div></article>';
 }
 function filtered(){
@@ -795,7 +804,7 @@ function openDetail(n){
     '<button class="pill" data-fav="'+esc(s.n)+'" aria-pressed="'+favs.has(s.n)+'">'+esc(favs.has(s.n)?t('remFav'):t('addFav'))+'</button>'+
     '<button class="pill" data-cmp="'+esc(s.n)+'" aria-pressed="'+(cmp.indexOf(s.n)>=0)+'">'+esc(cmp.indexOf(s.n)>=0?t('remCmp'):t('addCmp'))+'</button>'+
     (left>=0?'<button class="pill" data-cal="'+esc(s.n)+'">'+esc(t('cal'))+'</button>':'')+
-    '<a class="pill tint" href="https://www.lego.com/'+L.lego+'/search?q='+encodeURIComponent(s.n)+'" target="_blank" rel="noopener">'+esc(t('lego'))+'</a></div>';
+    '<a class="pill tint" href="'+esc(shopUrl(s))+'" target="_blank" rel="noopener">'+esc(t('shop'))+'</a></div>';
   var dlg=$('detail');
   if(!dlg.open){ ['favs','cmp'].forEach(function(x){if($(x).open) $(x).close();}); dlg.showModal(); }
   $('detailBody').scrollTop=0;
@@ -809,7 +818,7 @@ function calendar(n){                              // .ics file: retirement day,
   var sum=t('calSum',s.n,s.name).replace(/([,;\\])/g,'\\$1');
   var ics=['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//LEGO EOL//EN','BEGIN:VEVENT','UID:'+s.n+'-'+day+'@lego-eol',
     'DTSTAMP:'+todayIso.replace(/-/g,'')+'T000000Z','DTSTART;VALUE=DATE:'+day,'DTEND;VALUE=DATE:'+end,'SUMMARY:'+sum,
-    'URL:https://www.lego.com/'+L.lego+'/search?q='+encodeURIComponent(s.n),
+    'URL:'+shopUrl(s),
     'BEGIN:VALARM','ACTION:DISPLAY','DESCRIPTION:'+sum,'TRIGGER:-P14D','END:VALARM','END:VEVENT','END:VCALENDAR'].join('\r\n');
   var a=document.createElement('a'); a.href=URL.createObjectURL(new Blob([ics],{type:'text/calendar'})); a.download='lego-'+s.n+'.ics';
   document.body.appendChild(a); a.click(); a.remove(); setTimeout(function(){URL.revokeObjectURL(a.href);},2000);
