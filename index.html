@@ -196,9 +196,49 @@ dialog::backdrop{background:rgba(10,12,30,.28);-webkit-backdrop-filter:blur(8px)
 .sheet .lead{margin:0 0 14px;font-size:15px;color:var(--text2)}
 .x{position:absolute;top:18px;right:18px;width:36px;height:36px;border:0;border-radius:50%;background:var(--ctl);font-size:15px;line-height:1;color:var(--text);
   box-shadow:inset 0 1px 0 var(--spec)}
-.gsec{border-top:1px solid var(--sep);padding:14px 0 12px;display:grid;grid-template-columns:34px 1fr;gap:0 12px}
-.gsec .ico{width:34px;height:34px;border-radius:50%;background:var(--ctl);display:grid;place-items:center;font-size:16px;
-  box-shadow:inset 0 1px 0 var(--spec)}
+.gsec{border-top:1px solid var(--sep);padding:14px 0 12px;display:grid;grid-template-columns:112px 1fr;gap:0 16px;align-items:start}
+/* guide illustrations: tiny looping scenes built from the same shapes as the real interface */
+.demo{width:112px;height:84px;border-radius:18px;background:var(--ctl);position:relative;overflow:hidden;box-shadow:inset 0 1px 0 var(--spec)}
+.demo i{position:absolute;display:block;font-style:normal}
+.demo .k{background:var(--ctl-on);border-radius:6px;box-shadow:0 1px 3px rgba(20,25,60,.18)}
+.demo .w{background:#fff;border-radius:5px;box-shadow:inset 0 0 0 1px rgba(0,0,0,.06)}
+.demo .ln{height:4px;border-radius:2px;background:var(--text2);opacity:.45}
+.demo .tp{width:16px;height:16px;border-radius:50%;background:color-mix(in srgb,var(--accent) 60%,transparent);border:2px solid #fff;opacity:0;animation:dTap 5s infinite;z-index:3}
+.demo .pr{animation:dPress 5s infinite}
+.demo .sh{animation:dShow 5s infinite}
+.demo .dm{animation:dDim 5s infinite}
+.demo .on5{animation:dOn 5s infinite}
+.demo .rs{animation:dRise 5s infinite}
+.demo .fl{animation:dFill 5s infinite}
+.demo .bg3{animation:dBadge 6s infinite}
+.demo .st{animation:dStar 5s infinite}
+.demo .fa{animation:dA 5s infinite} .demo .fb{animation:dB 5s infinite}
+.demo .sl{animation:dL 5s infinite} .demo .sr{animation:dR 5s infinite}
+.demo .ac{transform-origin:bottom;animation:dAcc 5s infinite}
+.demo .c1{animation:dC1 6s infinite} .demo .c2{animation:dC2 6s infinite} .demo .c3{animation:dC3 6s infinite}
+.demo .dk{animation:dDark 6s infinite} .demo .kn{animation:dKnob 6s infinite}
+.demo .sp{animation:dSpin 4s infinite} .demo .rf{animation:dRef 4s infinite}
+@keyframes dTap{0%,12%{opacity:0;transform:scale(1.7)}20%{opacity:1;transform:scale(1)}28%{opacity:1;transform:scale(.7)}40%,100%{opacity:0;transform:scale(1.3)}}
+@keyframes dPress{0%,22%{transform:scale(1)}28%{transform:scale(.86)}36%,100%{transform:scale(1)}}
+@keyframes dShow{0%,32%{opacity:0;transform:translateY(8px)}44%,90%{opacity:1;transform:none}100%{opacity:0;transform:none}}
+@keyframes dDim{0%,32%{opacity:1}44%,90%{opacity:.14}100%{opacity:1}}
+@keyframes dOn{0%,28%{background:var(--ctl-on)}34%,90%{background:var(--text)}100%{background:var(--ctl-on)}}
+@keyframes dRise{0%,30%{transform:translateY(90px)}44%,90%{transform:none}100%{transform:translateY(90px)}}
+@keyframes dFill{0%,46%{width:0}80%,100%{width:72%}}
+@keyframes dBadge{0%,30%{background:var(--red)}34%,63%{background:var(--orange)}67%,96%{background:var(--text2)}100%{background:var(--red)}}
+@keyframes dStar{0%,28%{color:var(--text2);transform:scale(1)}36%{color:var(--star);transform:scale(1.6)}44%,90%{color:var(--star);transform:scale(1)}100%{color:var(--text2);transform:scale(1)}}
+@keyframes dA{0%,34%{opacity:1}40%,94%{opacity:0}100%{opacity:1}}
+@keyframes dB{0%,34%{opacity:0}40%,94%{opacity:1}100%{opacity:0}}
+@keyframes dL{0%,15%{transform:translateX(-12px)}40%,92%{transform:none}100%{transform:translateX(-12px)}}
+@keyframes dR{0%,15%{transform:translateX(12px)}40%,92%{transform:none}100%{transform:translateX(12px)}}
+@keyframes dAcc{0%,28%{transform:scaleY(1);filter:none}36%,90%{transform:scaleY(1.18);filter:brightness(1.25)}100%{transform:scaleY(1);filter:none}}
+@keyframes dC1{0%,28%{opacity:1}33%,95%{opacity:0}100%{opacity:1}}
+@keyframes dC2{0%,28%{opacity:0}33%,61%{opacity:1}66%,100%{opacity:0}}
+@keyframes dC3{0%,61%{opacity:0}66%,95%{opacity:1}100%{opacity:0}}
+@keyframes dDark{0%,45%{background:#fff;color:#1d1d1f}55%,95%{background:#1c1c1e;color:#f5f5f7}100%{background:#fff;color:#1d1d1f}}
+@keyframes dKnob{0%,45%{transform:none}55%,95%{transform:translateX(16px)}100%{transform:none}}
+@keyframes dSpin{0%,15%{transform:rotate(0)}50%,100%{transform:rotate(360deg)}}
+@keyframes dRef{0%,40%{opacity:.25;transform:translateX(6px)}58%,100%{opacity:1;transform:none}}
 .gsec h4{margin:0 0 2px;font-size:17px;font-weight:600;letter-spacing:-.02em}
 .gsec ul{margin:0;padding:0 0 0 18px;font-size:14px;line-height:1.45;color:var(--text2)}
 .gsec li{margin:3px 0}
@@ -265,6 +305,7 @@ dialog::backdrop{background:rgba(10,12,30,.28);-webkit-backdrop-filter:blur(8px)
   .name{font-size:15px;line-height:19px;height:38px} .price{font-size:17px}
   .foot{flex-direction:column;align-items:flex-start;height:56px;gap:4px}
   .sheet{padding:22px 18px 18px;border-radius:28px}
+  .gsec{grid-template-columns:1fr} .demo{margin-bottom:10px}
   .dt{grid-template-columns:1fr;gap:14px;margin-top:36px} .dt .pic{aspect-ratio:4/3}
   .frow{grid-template-columns:48px 1fr auto 30px;gap:9px} .frow .pic{width:48px}
   section.group{scroll-margin-top:16px}
@@ -400,15 +441,15 @@ var I18N={
   guideBtn:'Guide', done:'Done', guideTitle:'How it works',
   guideLead:'A quick tour of what you can see and do here.',
   guide:[
-   ['📦','What this is',['Every LEGO set expected to leave production (“End of Life”), with its expected retirement date.','The tiles at the top show how many sets are still retiring, the days left until the next deadline and how many sets leave on that day. Tap a tile to jump straight to those sets.']],
-   ['🗂️','Reading a card',['Top line: set number and theme. Below: name, piece count and release month.','Price is the official list price in the currency you chose.','The pill is the countdown: red under 60 days, orange under 200 days, grey beyond that.','A greyed-out picture means the set has already retired.','An orange note appears when the source lists the same set under two different dates.']],
-   ['🔍','Set details',['Tap a card to open its detail sheet: large picture, prices in all three currencies and price per piece.','The life bar shows how far the set is between its release and its retirement.','“Add to calendar” saves the retirement day with a reminder two weeks earlier.']],
-   ['🔎','Search and filters',['Search by name, set number or theme: results update as you type.','Filter by retirement year, by status (Retiring, Retired, All) and by theme.','Quick filters add one-tap shortcuts (next deadline, next 60 days, low price, big sets, this year’s releases) and a maximum-price slider.','Filters combine, and the line above the list shows how many sets match and their total list value.']],
-   ['📅','Timeline and sorting',['The timeline shows every deadline with the number of sets leaving: tap one to jump to it.','“Retirement date” groups sets by deadline, nearest first. You can also sort by price, piece count, newest release, name or set number.','Groups titled “In 2027” hold sets with a known year but no exact day yet.']],
-   ['⭐','Favorites',['Tap the star on a card to save the set.','“★ Favorites” opens your list, most urgent first, with the total to spend.','From there you can copy or share the list, or show only those sets in the main list.','Favorites are stored on this device only.']],
-   ['⇄','Compare',['Tap ⇄ on up to three cards, then “Compare” in the bar at the bottom.','Sets are shown side by side; the best price per piece is highlighted.']],
-   ['🌍','Currency, language and appearance',['Switch prices between €, £ and $.','Use the ☾ / ☀ button to switch between dark and light appearance.','Switch the interface between English (EN) and Italian (IT). Your choices are remembered.']],
-   ['🔄','Data and updates',['The list is kept up to date behind the scenes: there is nothing to do.','The footer shows the date of the list in use.','Dates are unofficial forecasts and can change: check LEGO.com before buying, using the link on each card.']]
+   ['tiles','What this is',['Every LEGO set expected to leave production (“End of Life”), with its expected retirement date.','The tiles at the top show how many sets are still retiring, the days left until the next deadline and how many sets leave on that day. Tap a tile to jump straight to those sets.']],
+   ['card','Reading a card',['Top line: set number and theme. Below: name, piece count and release month.','Price is the official list price in the currency you chose.','The pill is the countdown: red under 60 days, orange under 200 days, grey beyond that.','The two round buttons on the picture are ⇄ (compare) and ★ (favorite).','A greyed-out picture means the set has already retired.','An orange note appears when the source lists the same set under two different dates.']],
+   ['detail','Set details',['Tap a card to open its detail sheet: large picture, prices in all three currencies and price per piece.','The life bar shows how far the set is between its release and its retirement.','From the same sheet you can add the set to your favorites or to the comparison.','“Add to calendar” (for sets not yet retired) saves the retirement day with a reminder two weeks earlier.']],
+   ['filters','Search and filters',['Search by name, set number or theme: results update as you type.','Filter by retirement year, by status (Retiring, Retired, All) and by theme.','Quick filters add one-tap shortcuts (next deadline, next 60 days, low price, big sets, this year’s releases) and a maximum-price slider.','Filters combine, and the line above the list shows how many sets match and their total list value.','Quick filters are not remembered: “✕ Reset” or a page reload clears them.']],
+   ['timeline','Timeline and sorting',['The timeline shows every deadline with the number of sets leaving: tap one to jump to it.','“Retirement date” groups sets by deadline, nearest first. You can also sort by price, piece count, newest release, name or set number.','Groups titled “In 2027” hold sets with a known year but no exact day yet.']],
+   ['favs','Favorites',['Tap the star on a card to save the set.','“★ Favorites” opens your list, most urgent first, with the total to spend.','From there you can copy the list (or share it, where the device supports sharing), or show only those sets in the main list.','Favorites are stored on this device only.']],
+   ['compare','Compare',['Tap ⇄ on up to three cards, then “Compare” in the bar at the bottom.','Sets are shown side by side; the best price per piece is highlighted.','Picking a fourth set replaces the oldest one. The selection is cleared when you reload the page.']],
+   ['look','Currency, language and appearance',['Switch prices between €, £ and $.','Use the ☾ / ☀ button to switch between dark and light appearance.','Switch the interface between English (EN) and Italian (IT). Your choices are remembered.']],
+   ['update','Data and updates',['The list is kept up to date behind the scenes: there is nothing to do.','The footer shows the date of the list in use.','Dates are unofficial forecasts and can change: check LEGO.com before buying, using the link on each card.']]
   ]},
  it:{locale:'it-IT', lego:'it-it', title:'LEGO EOL · Set in uscita di produzione',
   h1:'Set in uscita di produzione.',
@@ -437,15 +478,15 @@ var I18N={
   guideBtn:'Guida', done:'Fine', guideTitle:'Come funziona',
   guideLead:'Un giro veloce di quello che puoi vedere e fare qui.',
   guide:[
-   ['📦','Che cos’è',['Tutti i set LEGO destinati a uscire di produzione (“End of Life”), con la data di ritiro prevista.','I riquadri in alto mostrano quanti set sono ancora in uscita, i giorni che mancano alla prossima scadenza e quanti set escono quel giorno. Tocca un riquadro per andare subito a quei set.']],
-   ['🗂️','Come leggere una scheda',['Prima riga: numero del set e tema. Sotto: nome, numero di pezzi e mese di uscita.','Il prezzo è quello di listino ufficiale nella valuta scelta.','L’etichetta è il conto alla rovescia: rossa sotto i 60 giorni, arancione sotto i 200, grigia oltre.','Un’immagine in grigio indica un set già ritirato.','Una nota arancione compare quando la fonte riporta lo stesso set con due date diverse.']],
-   ['🔍','Dettaglio del set',['Tocca una scheda per aprire il dettaglio: immagine grande, prezzi nelle tre valute e prezzo al pezzo.','La barra della vita mostra a che punto è il set tra l’uscita e il ritiro.','“Aggiungi al calendario” salva il giorno del ritiro con un promemoria due settimane prima.']],
-   ['🔎','Ricerca e filtri',['Cerca per nome, numero del set o tema: i risultati si aggiornano mentre scrivi.','Filtra per anno di ritiro, per stato (In uscita, Ritirati, Tutti) e per tema.','I filtri veloci aggiungono scorciatoie a un tocco (prossima scadenza, entro 60 giorni, prezzo basso, set grandi, usciti quest’anno) e un cursore per il prezzo massimo.','I filtri si combinano, e la riga sopra l’elenco indica quanti set corrispondono e il loro valore di listino totale.']],
-   ['📅','Linea del tempo e ordinamento',['La linea del tempo mostra ogni scadenza con il numero di set in uscita: toccane una per raggiungerla.','“Data di ritiro” raggruppa i set per scadenza, dalla più vicina. Puoi ordinare anche per prezzo, numero di pezzi, uscita più recente, nome o numero del set.','I gruppi intitolati “Nel 2027” contengono set di cui si conosce l’anno ma non ancora il giorno esatto.']],
-   ['⭐','Preferiti',['Tocca la stella su una scheda per salvare il set.','“★ Preferiti” apre la tua lista, dalla scadenza più urgente, con il totale da spendere.','Da lì puoi copiare o condividere la lista, oppure mostrare solo quei set nell’elenco principale.','I preferiti restano memorizzati solo su questo dispositivo.']],
-   ['⇄','Confronto',['Tocca ⇄ su un massimo di tre schede, poi “Confronta” nella barra in basso.','I set compaiono affiancati; il miglior prezzo al pezzo è evidenziato.']],
-   ['🌍','Valuta, lingua e aspetto',['Cambia i prezzi tra €, £ e $.','Usa il pulsante ☾ / ☀ per passare dall’aspetto scuro a quello chiaro.','Cambia l’interfaccia tra inglese (EN) e italiano (IT). Le scelte vengono ricordate.']],
-   ['🔄','Dati e aggiornamenti',['L’elenco viene tenuto aggiornato dietro le quinte: non devi fare nulla.','In fondo alla pagina trovi la data della lista in uso.','Le date sono previsioni non ufficiali e possono cambiare: prima di acquistare verifica su LEGO.com con il link presente su ogni scheda.']]
+   ['tiles','Che cos’è',['Tutti i set LEGO destinati a uscire di produzione (“End of Life”), con la data di ritiro prevista.','I riquadri in alto mostrano quanti set sono ancora in uscita, i giorni che mancano alla prossima scadenza e quanti set escono quel giorno. Tocca un riquadro per andare subito a quei set.']],
+   ['card','Come leggere una scheda',['Prima riga: numero del set e tema. Sotto: nome, numero di pezzi e mese di uscita.','Il prezzo è quello di listino ufficiale nella valuta scelta.','L’etichetta è il conto alla rovescia: rossa sotto i 60 giorni, arancione sotto i 200, grigia oltre.','I due pulsanti tondi sull’immagine sono ⇄ (confronta) e ★ (preferito).','Un’immagine in grigio indica un set già ritirato.','Una nota arancione compare quando la fonte riporta lo stesso set con due date diverse.']],
+   ['detail','Dettaglio del set',['Tocca una scheda per aprire il dettaglio: immagine grande, prezzi nelle tre valute e prezzo al pezzo.','La barra della vita mostra a che punto è il set tra l’uscita e il ritiro.','Dallo stesso pannello puoi aggiungere il set ai preferiti o al confronto.','“Aggiungi al calendario” (per i set non ancora ritirati) salva il giorno del ritiro con un promemoria due settimane prima.']],
+   ['filters','Ricerca e filtri',['Cerca per nome, numero del set o tema: i risultati si aggiornano mentre scrivi.','Filtra per anno di ritiro, per stato (In uscita, Ritirati, Tutti) e per tema.','I filtri veloci aggiungono scorciatoie a un tocco (prossima scadenza, entro 60 giorni, prezzo basso, set grandi, usciti quest’anno) e un cursore per il prezzo massimo.','I filtri si combinano, e la riga sopra l’elenco indica quanti set corrispondono e il loro valore di listino totale.','I filtri veloci non vengono ricordati: “✕ Azzera” o il ricaricamento della pagina li cancella.']],
+   ['timeline','Linea del tempo e ordinamento',['La linea del tempo mostra ogni scadenza con il numero di set in uscita: toccane una per raggiungerla.','“Data di ritiro” raggruppa i set per scadenza, dalla più vicina. Puoi ordinare anche per prezzo, numero di pezzi, uscita più recente, nome o numero del set.','I gruppi intitolati “Nel 2027” contengono set di cui si conosce l’anno ma non ancora il giorno esatto.']],
+   ['favs','Preferiti',['Tocca la stella su una scheda per salvare il set.','“★ Preferiti” apre la tua lista, dalla scadenza più urgente, con il totale da spendere.','Da lì puoi copiare la lista (o condividerla, dove il dispositivo lo consente), oppure mostrare solo quei set nell’elenco principale.','I preferiti restano memorizzati solo su questo dispositivo.']],
+   ['compare','Confronto',['Tocca ⇄ su un massimo di tre schede, poi “Confronta” nella barra in basso.','I set compaiono affiancati; il miglior prezzo al pezzo è evidenziato.','Scegliendo un quarto set, il più vecchio viene sostituito. La selezione si azzera ricaricando la pagina.']],
+   ['look','Valuta, lingua e aspetto',['Cambia i prezzi tra €, £ e $.','Usa il pulsante ☾ / ☀ per passare dall’aspetto scuro a quello chiaro.','Cambia l’interfaccia tra inglese (EN) e italiano (IT). Le scelte vengono ricordate.']],
+   ['update','Dati e aggiornamenti',['L’elenco viene tenuto aggiornato dietro le quinte: non devi fare nulla.','In fondo alla pagina trovi la data della lista in uso.','Le date sono previsioni non ufficiali e possono cambiare: prima di acquistare verifica su LEGO.com con il link presente su ogni scheda.']]
   ]}
 };
 var L, fmtLong, fmtMed, fmtMon, fmtDay, fmtNum;
@@ -565,9 +606,31 @@ function renderChips(){
     '<output id="maxPL">'+esc(maxP==null? t('anyPrice') : t('upTo',money0(maxP)))+'</output></label>'+
     (any?'<button class="pill sm" data-quick="reset">'+esc(t('reset'))+'</button>':'');
 }
+/* guide illustrations: plain shapes, positioned by hand inside a 112x84 box, animated in CSS */
+function P(cls,l,t,w,h,extra,inner){return '<i class="'+cls+'" style="left:'+l+'px;top:'+t+'px;'+(w!=null?'width:'+w+'px;':'')+(h!=null?'height:'+h+'px;':'')+(extra||'')+'">'+(inner||'')+'</i>';}
+var DEMO={
+  tiles: P('k',8,10,28,30)+P('k pr',42,10,28,30)+P('k',76,10,28,30)+P('ln',13,18,16,6,'opacity:.8')+P('',47,18,18,6,'border-radius:3px;background:var(--red)')+P('ln',81,18,14,6,'opacity:.8')+
+         P('ln',13,29,18)+P('ln',47,29,18)+P('ln',81,29,18)+P('tp',48,22)+[8,34,60,86].map(function(x){return P('k sh',x,50,20,26);}).join(''),
+  card:  P('k',26,8,60,68,'border-radius:9px')+P('w',30,12,52,30)+P('ln',31,47,36)+P('ln',31,55,24)+P('ln',31,65,16,6,'opacity:.85')+P('bg3',58,63,24,9,'border-radius:5px'),
+  detail:P('k pr',8,10,28,34)+P('k',42,10,28,34)+P('k',76,10,28,34)+P('w',11,13,22,14)+P('w',45,13,22,14)+P('w',79,13,22,14)+P('tp',14,22)+
+         P('k rs',10,18,92,60,'border-radius:10px;z-index:2',P('w',6,6,32,32)+P('ln',44,9,40)+P('ln',44,18,28)+P('ln',44,27,34)+
+           P('',6,46,80,6,'border-radius:3px;background:var(--ctl)',P('fl',0,0,null,6,'border-radius:3px;background:linear-gradient(90deg,var(--green),var(--orange),var(--red))'))),
+  filters:P('k',8,9,28,11,'border-radius:6px')+P('k on5 pr',42,9,28,11,'border-radius:6px')+P('k',76,9,28,11,'border-radius:6px')+P('tp',48,6)+
+         [[8,28,''],[42,28,' dm'],[76,28,''],[8,55,' dm'],[42,55,''],[76,55,' dm']].map(function(c){return P('k'+c[2],c[0],c[1],28,22);}).join(''),
+  timeline:P('',6,52,100,2,'background:var(--sep)')+[[14,34,'var(--red)',''],[40,10,'var(--orange)',''],[66,22,'var(--accent)',' ac'],[92,6,'var(--accent)','']].map(function(b){
+           return P(b[3].trim(),b[0],52-b[1],12,b[1],'border-radius:4px 4px 2px 2px;background:'+b[2])+P('',b[0]+3,50,6,6,'border-radius:50%;background:var(--text)');}).join('')+
+         P('tp',64,36)+P('ln sh',14,66,52,6,'opacity:.8')+P('k sh',14,76,20,8)+P('k sh',38,76,20,8)+P('k sh',62,76,20,8),
+  favs:  P('k',26,7,60,50,'border-radius:9px')+P('w',30,11,52,28)+P('ln',31,44,34)+P('st',65,9,16,16,'font-size:16px;line-height:16px;text-align:center','★')+P('tp',65,9)+
+         P('k',24,63,64,15,'border-radius:8px')+P('fa',24,63,64,15,'text-align:center;font-size:10px;font-weight:700;line-height:15px','★ · 1')+P('fb',24,63,64,15,'text-align:center;font-size:10px;font-weight:700;line-height:15px','★ · 2'),
+  compare:P('k sl',14,10,36,44,'',P('w',4,4,28,18)+P('ln',5,27,24)+P('ln',5,35,16))+P('k sr',62,10,36,44,'',P('w',4,4,28,18)+P('ln',5,27,24)+P('ln',5,35,16))+
+         P('sh',48,22,16,14,'text-align:center;font-size:13px;font-weight:700;line-height:14px;color:var(--accent)','⇄')+P('sh',16,62,32,7,'border-radius:4px;background:var(--green)')+P('ln sh',64,62,32,7,'border-radius:4px'),
+  look:  P('dk',0,0,112,84,'',P('c1',16,24,30,36,'font-size:34px;font-weight:700;line-height:36px;text-align:center','€')+P('c2',16,24,30,36,'font-size:34px;font-weight:700;line-height:36px;text-align:center','£')+
+           P('c3',16,24,30,36,'font-size:34px;font-weight:700;line-height:36px;text-align:center','$')+P('',62,32,36,20,'border-radius:10px;background:currentColor;opacity:.22')+P('kn',64,34,16,16,'border-radius:50%;background:currentColor')),
+  update:P('sp',10,24,36,36,'font-size:32px;font-weight:700;line-height:36px;text-align:center;color:var(--accent)','↻')+P('k rf',54,20,46,10,'border-radius:5px')+P('k rf',54,37,36,10,'border-radius:5px;animation-delay:.15s')+P('k rf',54,54,42,10,'border-radius:5px;animation-delay:.3s')
+};
 function renderGuide(){
   $('guideBody').innerHTML=L.guide.map(function(g){
-    return '<section class="gsec"><div class="ico" aria-hidden="true">'+g[0]+'</div><div><h4>'+esc(g[1])+'</h4><ul>'+
+    return '<section class="gsec"><div class="demo" aria-hidden="true">'+(DEMO[g[0]]||'')+'</div><div><h4>'+esc(g[1])+'</h4><ul>'+
       g[2].map(function(x){return '<li>'+esc(x)+'</li>';}).join('')+'</ul></div></section>';}).join('');
 }
 function applyLang(){
