@@ -1,4 +1,4 @@
-window.EOL_DATA={"ref":"DRsYFRxWSkAbEhhCBx0FBgQKBAENEQYPFkEPCgJDABkJFxZBCQoLCkIfABtBFwoYDB0FCwhBEQcFFkIVAA4eSA4CAUIOABYDCws=","updated":"November 15, 2026","fetched":"2026-11-16","rows":[["Animal Crossing","2026","July 31, 2026","77054 Leif's Caravan & Garden Shop","£24.99 / $29.99 / €29.99","263 pieces ; Released Jan 1, 2025"],
+window.EOL_DATA={"ref":"DRsYFRxWSkAbEhhCBx0FBgQKBAENEQYPFkEPCgJDABkJFxZBCQoLCkIfABtBFwoYDB0FCwhBEQcFFkIVAA4eSA4CAUIOABYDCws=","updated":"November 17, 2026","fetched":"2026-11-23","rows":[["Animal Crossing","2026","July 31, 2026","77054 Leif's Caravan & Garden Shop","£24.99 / $29.99 / €29.99","263 pieces ; Released Jan 1, 2025"],
 ["Animal Crossing","2026","July 31, 2026","77055 Able Sisters Clothing Shop","£34.99 / $39.99 / €39.99","322 pieces ; Released Jan 1, 2025"],
 ["Animal Crossing","2026","July 31, 2026","77057 Creative Houses: Seasons of Fun","£79.99 / $89.99 / €89.99","814 pieces ; Released Aug 1, 2025"],
 ["Animal Crossing","2026","December 31, 2026","77053 Stargazing with Celeste","£8.99 / $9.99 / €9.99","78 pieces ; Released Jan 1, 2025"],
